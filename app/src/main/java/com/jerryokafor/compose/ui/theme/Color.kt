@@ -6,13 +6,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
-private val colorLightPrimary = Color(0xFFFFB400)
+val colorPrimary = Color(0xFF2E3D49)
+private val colorLightPrimary = Color(0xFF586775)
 private val colorLightTextPrimary = Color(0xFF000000)
 private val colorLightTextSecondary = Color(0xFF6C727A)
 private val colorLightBackground = Color(0xFFFFFFFF)
 private val colorLightError = Color(0xFFD62222)
 
-private val colorDarkPrimary = Color(0xFF0037FF)
+private val colorDarkPrimary = Color(0xFF061721)
 private val colorDarkTextPrimary = Color(0xFFFAFAFA)
 private val colorDarkTextSecondary = Color(0xFF6C727A)
 private val colorDarkBackground = Color(0xFF090A0A)
