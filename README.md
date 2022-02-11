@@ -1,7 +1,8 @@
 # Coompose Template
 
 Looking to start using Jetpack Compose, we have a simple template here to get you started.
-
+Links:
+https://github.com/google/secrets-gradle-plugin
 
 ## Features
 * Single Activity

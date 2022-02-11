@@ -1,6 +1,7 @@
 package com.jerryokafor.compose
 
 import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
 /**
@@ -8,7 +9,8 @@ import timber.log.Timber
  * @Project ComposeTemplate
  * @Date 15/10/2021 06:33
  */
-class ComposeTemplateApp : Application() {
+@HiltAndroidApp
+class App : Application() {
     override fun onCreate() {
         super.onCreate()
 

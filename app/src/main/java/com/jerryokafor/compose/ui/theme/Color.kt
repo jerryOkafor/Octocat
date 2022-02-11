@@ -1,98 +1,59 @@
 package com.jerryokafor.compose.ui.theme
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
-val colorPrimary = Color(0xFF2E3D49)
-private val colorLightPrimary = Color(0xFF586775)
-private val colorLightTextPrimary = Color(0xFF000000)
-private val colorLightTextSecondary = Color(0xFF6C727A)
-private val colorLightBackground = Color(0xFFFFFFFF)
-private val colorLightError = Color(0xFFD62222)
+val md_theme_light_primary = Color(0xFF0061a3)
+val md_theme_light_onPrimary = Color(0xFFffffff)
+val md_theme_light_primaryContainer = Color(0xFFcfe4ff)
+val md_theme_light_onPrimaryContainer = Color(0xFF001d36)
+val md_theme_light_secondary = Color(0xFF006874)
+val md_theme_light_onSecondary = Color(0xFFffffff)
+val md_theme_light_secondaryContainer = Color(0xFF90f1ff)
+val md_theme_light_onSecondaryContainer = Color(0xFF001f24)
+val md_theme_light_tertiary = Color(0xFFb42900)
+val md_theme_light_onTertiary = Color(0xFFffffff)
+val md_theme_light_tertiaryContainer = Color(0xFFffdacf)
+val md_theme_light_onTertiaryContainer = Color(0xFF3d0700)
+val md_theme_light_error = Color(0xFFba1b1b)
+val md_theme_light_errorContainer = Color(0xFFffdad4)
+val md_theme_light_onError = Color(0xFFffffff)
+val md_theme_light_onErrorContainer = Color(0xFF410001)
+val md_theme_light_background = Color(0xFFfdfcff)
+val md_theme_light_onBackground = Color(0xFF1b1b1b)
+val md_theme_light_surface = Color(0xFFfdfcff)
+val md_theme_light_onSurface = Color(0xFF1b1b1b)
+val md_theme_light_surfaceVariant = Color(0xFFdfe3ec)
+val md_theme_light_onSurfaceVariant = Color(0xFF42474e)
+val md_theme_light_outline = Color(0xFF73777f)
+val md_theme_light_inverseOnSurface = Color(0xFFf1f0f4)
+val md_theme_light_inverseSurface = Color(0xFF2f3033)
 
-private val colorDarkPrimary = Color(0xFF061721)
-private val colorDarkTextPrimary = Color(0xFFFAFAFA)
-private val colorDarkTextSecondary = Color(0xFF6C727A)
-private val colorDarkBackground = Color(0xFF090A0A)
-private val colorDarkError = Color(0xFFD62222)
+val md_theme_dark_primary = Color(0xFF9ccaff)
+val md_theme_dark_onPrimary = Color(0xFF003259)
+val md_theme_dark_primaryContainer = Color(0xFF00497e)
+val md_theme_dark_onPrimaryContainer = Color(0xFFcfe4ff)
+val md_theme_dark_secondary = Color(0xFF4fd8eb)
+val md_theme_dark_onSecondary = Color(0xFF00363d)
+val md_theme_dark_secondaryContainer = Color(0xFF004f59)
+val md_theme_dark_onSecondaryContainer = Color(0xFF90f1ff)
+val md_theme_dark_tertiary = Color(0xFFffb49e)
+val md_theme_dark_onTertiary = Color(0xFF611100)
+val md_theme_dark_tertiaryContainer = Color(0xFF8a1d00)
+val md_theme_dark_onTertiaryContainer = Color(0xFFffdacf)
+val md_theme_dark_error = Color(0xFFffb4a9)
+val md_theme_dark_errorContainer = Color(0xFF930006)
+val md_theme_dark_onError = Color(0xFF680003)
+val md_theme_dark_onErrorContainer = Color(0xFFffdad4)
+val md_theme_dark_background = Color(0xFF1b1b1b)
+val md_theme_dark_onBackground = Color(0xFFe2e2e6)
+val md_theme_dark_surface = Color(0xFF1b1b1b)
+val md_theme_dark_onSurface = Color(0xFFe2e2e6)
+val md_theme_dark_surfaceVariant = Color(0xFF42474e)
+val md_theme_dark_onSurfaceVariant = Color(0xFFc3c7d0)
+val md_theme_dark_outline = Color(0xFF8d9199)
+val md_theme_dark_inverseOnSurface = Color(0xFF1b1b1b)
+val md_theme_dark_inverseSurface = Color(0xFFe2e2e6)
 
-class AppColors(
-    primary: Color,
-    textPrimary: Color,
-    textSecondary: Color,
-    background: Color,
-    error: Color,
-    isLight: Boolean
-) {
-    var primary by mutableStateOf(primary)
-        private set
-    var textSecondary by mutableStateOf(textSecondary)
-        private set
-    var textPrimary by mutableStateOf(textPrimary)
-        private set
-    var error by mutableStateOf(error)
-        private set
-    var background by mutableStateOf(background)
-        private set
-    var isLight by mutableStateOf(isLight)
-        internal set
-
-    fun copy(
-        primary: Color = this.primary,
-        textPrimary: Color = this.textPrimary,
-        textSecondary: Color = this.textSecondary,
-        error: Color = this.error,
-        background: Color = this.background,
-        isLight: Boolean = this.isLight
-    ): AppColors = AppColors(
-        primary,
-        textPrimary,
-        textSecondary,
-        error,
-        background,
-        isLight
-    )
-
-    fun updateColorsFrom(other: AppColors) {
-        primary = other.primary
-        textPrimary = other.textPrimary
-        textSecondary = other.textSecondary
-        background = other.background
-        error = other.error
-    }
-}
-
-fun lightColors(
-    primary: Color = colorLightPrimary,
-    textPrimary: Color = colorLightTextPrimary,
-    textSecondary: Color = colorLightTextSecondary,
-    background: Color = colorLightBackground,
-    error: Color = colorLightError
-): AppColors = AppColors(
-    primary = primary,
-    textPrimary = textPrimary,
-    textSecondary = textSecondary,
-    background = background,
-    error = error,
-    isLight = true
-)
-
-fun darkColors(
-    primary: Color = colorDarkPrimary,
-    textPrimary: Color = colorDarkTextPrimary,
-    textSecondary: Color = colorDarkTextSecondary,
-    background: Color = colorDarkBackground,
-    error: Color = colorDarkError
-): AppColors = AppColors(
-    primary = primary,
-    textPrimary = textPrimary,
-    textSecondary = textSecondary,
-    background = background,
-    error = error,
-    isLight = false
-)
-
-val LocalColors = staticCompositionLocalOf { lightColors() }
+val seed = Color(0xFF4183c4)
+val error = Color(0xFFba1b1b)
+val github_black = Color(0xFF333333)

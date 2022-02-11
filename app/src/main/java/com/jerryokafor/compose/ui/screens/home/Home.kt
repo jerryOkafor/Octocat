@@ -6,18 +6,21 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.jerryokafor.compose.NavigateBackButton
-import com.jerryokafor.compose.NavigateButton
+import com.jerryokafor.compose.ui.screens.home.HomeViewModel
+import com.jerryokafor.compose.ui.theme.Spacing
 
 /**
  * @Author Jerry Okafor
@@ -27,11 +30,15 @@ import com.jerryokafor.compose.NavigateButton
 
 @ExperimentalAnimationApi
 @Composable
-fun AnimatedVisibilityScope.Home(navController: NavHostController) {
+fun AnimatedVisibilityScope.Home(
+    navController: NavHostController,
+    viewModel: HomeViewModel = hiltViewModel()
+) {
     Column(
         Modifier
             .fillMaxSize()
             .background(Color.Blue)
+            .padding(Spacing.Dp32)
     ) {
 
         Text(
@@ -45,11 +52,10 @@ fun AnimatedVisibilityScope.Home(navController: NavHostController) {
                 ),
             color = Color.White, fontSize = 80.sp, textAlign = TextAlign.Center
         )
-        NavigateButton(
-            "Login",
-            Modifier
-                .wrapContentWidth()
-                .then(Modifier.align(Alignment.CenterHorizontally))
-        ) { navController.navigate("login") }
+
+        OutlinedButton(onClick = { viewModel.logout() }) {
+            Text(text = "Logout")
+        }
+
     }
 }

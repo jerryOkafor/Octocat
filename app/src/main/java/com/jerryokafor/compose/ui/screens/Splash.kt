@@ -6,6 +6,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -17,9 +18,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jerryokafor.compose.R
 import com.jerryokafor.compose.ui.theme.AppTheme
-import com.jerryokafor.compose.ui.theme.colorPrimary
-import com.jerryokafor.compose.ui.theme.darkColors
-import com.jerryokafor.compose.ui.theme.lightColors
 import kotlinx.coroutines.delay
 
 /**
@@ -34,9 +32,7 @@ private const val SplashWaitTime: Long = 1000
 fun Splash(modifier: Modifier = Modifier, onTimeout: () -> Unit) {
 
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(if (isSystemInDarkTheme()) darkColors().primary else lightColors().primary)
+        modifier = modifier.fillMaxSize()
     ) {
         // Adds composition consistency. Use the value when LaunchedEffect is first called
         val currentOnTimeout by rememberUpdatedState(onTimeout)
@@ -50,18 +46,9 @@ fun Splash(modifier: Modifier = Modifier, onTimeout: () -> Unit) {
             painterResource(id = R.drawable.logo),
             contentDescription = null,
             Modifier
-                .size(250.dp, 100.dp)
+                .size(100.dp, 100.dp)
                 .align(Alignment.Center)
         )
-
-//        Image(
-//            painterResource(id = R.drawable.motto),
-//            contentDescription = null,
-//            Modifier
-//                .scale(0.4f)
-//                .align(Alignment.BottomCenter)
-//                .padding(bottom = 16.dp)
-//        )
     }
 }
 

@@ -4,6 +4,7 @@ plugins {
     kotlin("kapt")
     id("kotlin-parcelize")
     id("dagger.hilt.android.plugin")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -25,17 +26,21 @@ android {
         useLibrary("org.apache.http.legacy")
 
         javaCompileOptions {
-//            annotationProcessorOptions {
-//                arguments += mapOf(
-//                    "room.schemaLocation" to "$projectDir/schemas",
-//                    "room.incremental" to "true",
-//                    "room.expandProjection" to "true"
-//                )
-//            }
+            annotationProcessorOptions {
+                arguments += mapOf(
+                    "room.schemaLocation" to "$projectDir/schemas",
+                    "room.incremental" to "true",
+                    "room.expandProjection" to "true"
+                )
+            }
         }
     }
 
     buildTypes {
+        all {
+            buildConfigField("String", "BASE_URL", "\"https://api.github.com/\"")
+            buildConfigField("String", "OAUTH_BASE_URL", "\"https://github.com/login/oauth/\"")
+        }
         debug {
             isMinifyEnabled = false
             applicationIdSuffix = ".dev"
@@ -102,6 +107,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.appcompat:appcompat:1.4.1")
     implementation("com.google.android.material:material:1.5.0")
+    implementation("androidx.browser:browser:1.4.0")
 
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
 
@@ -113,17 +119,19 @@ dependencies {
 
     //Compose
     implementation("androidx.activity:activity-compose:1.4.0")
-    implementation("androidx.compose.material:material:1.2.0-alpha01")
-    implementation("androidx.compose.animation:animation:1.2.0-alpha01")
-    implementation("androidx.compose.ui:ui-tooling:1.2.0-alpha01")
+    implementation("androidx.compose.animation:animation:1.2.0-alpha02")
+    implementation("androidx.compose.ui:ui-tooling:1.2.0-alpha02")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.0")
-    implementation("androidx.navigation:navigation-compose:2.4.0-rc01")
+    implementation("androidx.navigation:navigation-compose:2.5.0-alpha01")
+
+    implementation("androidx.compose.material:material:1.2.0-alpha02")
+    implementation("androidx.compose.material3:material3:1.0.0-alpha04")
 
     //Datastore
 //    implementation("androidx.datastore:datastore:1.0.0")
 //    implementation("com.google.protobuf:protobuf-javalite:4.0.0-rc-2")
-//    implementation("androidx.datastore:datastore-preferences:1.0.0-rc01")
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 
     //WorkManager
     implementation("androidx.work:work-runtime-ktx:2.7.1")
@@ -131,14 +139,14 @@ dependencies {
 
     //Accompanists
     //https://search.maven.org/search?q=g:com.google.accompanist
-    implementation("com.google.accompanist:accompanist-navigation-animation:0.22.0-rc")
-    implementation("com.google.accompanist:accompanist-systemuicontroller:0.22.0-rc")
-    implementation("com.google.accompanist:accompanist-insets:0.22.0-rc")
-//    implementation("com.google.accompanist:accompanist-placeholder:0.22.0-rc")
-//    implementation("com.google.accompanist:accompanist-flowlayout:0.22.0-rc")
-//    implementation("com.google.accompanist:accompanist-insets:0.22.0-rc")
-//    implementation("com.google.accompanist:accompanist-pager:0.22.0-rc")
-//    implementation("com.google.accompanist:accompanist-swiperefresh:0.22.0-rc")
+    implementation("com.google.accompanist:accompanist-navigation-animation:0.24.1-alpha")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.24.1-alpha")
+    implementation("com.google.accompanist:accompanist-insets:0.24.1-alpha")
+//    implementation("com.google.accompanist:accompanist-placeholder:0.24.1-alpha")
+//    implementation("com.google.accompanist:accompanist-flowlayout:0.24.1-alpha")
+//    implementation("com.google.accompanist:accompanist-insets:0.24.1-alpha")
+//    implementation("com.google.accompanist:accompanist-pager:0.24.1-alpha")
+//    implementation("com.google.accompanist:accompanist-swiperefresh:0.24.1-alpha")
 
     //Coroutine
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
@@ -158,22 +166,22 @@ dependencies {
     implementation("io.coil-kt:coil-compose:1.4.0")
 
     //Hilt
-    implementation("com.google.dagger:hilt-android:2.38.1")
-    kapt("com.google.dagger:hilt-android-compiler:2.38.1")
+    implementation("com.google.dagger:hilt-android:2.39.1")
+    kapt("com.google.dagger:hilt-android-compiler:2.39.1")
 
-    implementation("androidx.hilt:hilt-navigation-compose:1.0.0-rc01")
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
     // For instrumentation tests
-    androidTestImplementation("com.google.dagger:hilt-android-testing:2.38.1")
-    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.38.1")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.39.1")
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.39.1")
 
     // For local unit tests
-    testImplementation("com.google.dagger:hilt-android-testing:2.38.1")
-    kaptTest("com.google.dagger:hilt-android-compiler:2.38.1")
+    testImplementation("com.google.dagger:hilt-android-testing:2.39.1")
+    kaptTest("com.google.dagger:hilt-android-compiler:2.39.1")
 
     //Hilt WorkerManager
-    implementation("androidx.hilt:hilt-work:1.0.0")
-    kapt("androidx.hilt:hilt-compiler:1.0.0")
+//    implementation("androidx.hilt:hilt-work:1.0.0")
+//    kapt("androidx.hilt:hilt-compiler:1.0.0")
 
     //Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
@@ -182,11 +190,11 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
 
     //Room
-//    implementation("androidx.room:room-runtime:2.3.0")
-//    kapt("androidx.room:room-compiler:2.3.0")
-//    implementation("androidx.room:room-ktx:2.3.0")
-//    testImplementation("androidx.room:room-testing:2.3.0")
-//    debugImplementation("com.amitshekhar.android:debug-db:1.0.6")
+    implementation("androidx.room:room-runtime:2.4.1")
+    kapt("androidx.room:room-compiler:2.4.1")
+    implementation("androidx.room:room-ktx:2.4.1")
+    testImplementation("androidx.room:room-testing:2.4.1")
+    debugImplementation("com.amitshekhar.android:debug-db:1.0.6")
 
     //Timber
     implementation("com.jakewharton.timber:timber:4.7.1")
