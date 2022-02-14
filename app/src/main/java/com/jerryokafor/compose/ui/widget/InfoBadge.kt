@@ -44,7 +44,7 @@ fun InfoBadge(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(Spacing.Dp10),
+                .padding(Spacing.DP10),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -57,7 +57,7 @@ fun InfoBadge(
             AnimatedVisibility(visible = cancellable) {
                 Image(
                     modifier = Modifier
-                        .size(Spacing.Dp18, Spacing.Dp18)
+                        .size(Spacing.DP18, Spacing.DP18)
                         .clickable { onCancel() },
                     painter = painterResource(id = R.drawable.ic_close),
                     colorFilter = ColorFilter.tint(color = Color.White),

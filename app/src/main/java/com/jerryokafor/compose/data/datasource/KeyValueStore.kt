@@ -34,12 +34,9 @@ class KeyValueStore(
         context.dataStore.data.map {
             if (it[ACCESS_TOKEN_KEY]?.isEmpty() == true) AuthState.NO_AUTH else AuthState.AUTH
         }.flowOn(defaultDispatcher)
-            .onEach {
-                Timber.d("Auth Repo: $it")
-            }
             .shareIn(
                 scope = externalScope,
-                replay = 5,
+                replay = 1,
                 started = SharingStarted.WhileSubscribed()
             )
 

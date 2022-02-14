@@ -1,4 +1,4 @@
-package com.jerryokafor.compose.ui.screens.home
+package com.jerryokafor.compose.ui.screens.dashboard
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -2,9 +2,10 @@ package com.jerryokafor.compose.ui.screens.auth.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jerryokafor.compose.AuthState
-import com.jerryokafor.compose.OAuthResponse
-import com.jerryokafor.compose.domain.model.*
+import com.jerryokafor.compose.domain.model.OAuthResponse
+import com.jerryokafor.compose.domain.model.onFailure
+import com.jerryokafor.compose.domain.model.onLoading
+import com.jerryokafor.compose.domain.model.onSuccess
 import com.jerryokafor.compose.domain.model.repository.AuthRepository
 import com.jerryokafor.compose.ui.screens.state.UIInfo
 import com.jerryokafor.compose.ui.screens.state.UIState

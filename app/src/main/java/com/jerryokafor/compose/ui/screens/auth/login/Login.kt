@@ -34,7 +34,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.jerryokafor.compose.OAuthActivity
 import com.jerryokafor.compose.R
-import com.jerryokafor.compose.domain.model.OAuthAccessCode
 import com.jerryokafor.compose.ui.screens.state.UIInfo
 import com.jerryokafor.compose.ui.theme.FontSize
 import com.jerryokafor.compose.ui.theme.Spacing
@@ -110,7 +109,7 @@ fun LoginScreenContent(
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
-            .padding(Spacing.Dp16)
+            .padding(Spacing.DP16)
     ) {
 
         val (logo, button, text, info) = createRefs()
@@ -118,7 +117,7 @@ fun LoginScreenContent(
         AnimatedVisibility(modifier = Modifier.constrainAs(info) {
             start.linkTo(parent.start)
             end.linkTo(parent.end)
-            top.linkTo(parent.top, margin = Spacing.Dp24)
+            top.linkTo(parent.top, margin = Spacing.DP24)
         }, visible = showBadge) {
             InfoBadge(
                 isError = state.info?.isError ?: false,
@@ -138,7 +137,7 @@ fun LoginScreenContent(
 
         OutlineProgressButton(modifier = Modifier
             .constrainAs(button) {
-                bottom.linkTo(text.top, margin = Spacing.Dp16)
+                bottom.linkTo(text.top, margin = Spacing.DP16)
                 end to parent.end
                 start to parent.start
             }
@@ -178,7 +177,7 @@ fun LoginScreenContent(
 
         ClickableText(
             modifier = Modifier.constrainAs(text) {
-                bottom.linkTo(parent.bottom, margin = Spacing.Dp16)
+                bottom.linkTo(parent.bottom, margin = Spacing.DP16)
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
             },

@@ -12,20 +12,20 @@ val DefaultButtonHeight = 45.dp
 val AvatarSize = 50.dp
 
 object Spacing {
-    val Dp4 = 4.dp
-    val Dp5 = 5.dp
-    val Dp8 = 8.dp
-    val Dp10 = 10.dp
-    val Dp12 = 12.dp
-    val Dp14 = 14.dp
-    val Dp16 = 16.dp
-    val Dp18 = 18.dp
-    val Dp24 = 24.dp
-    val Dp32 = 32.dp
-    val Dp64 = 64.dp
-    val Dp48 = 48.dp
-    val Dp72 = 72.dp
-    val Dp100 = 100.dp
+    val DP4 = 4.dp
+    val DP5 = 5.dp
+    val DP8 = 8.dp
+    val DP10 = 10.dp
+    val DP12 = 12.dp
+    val DP14 = 14.dp
+    val DP16 = 16.dp
+    val DP18 = 18.dp
+    val DP24 = 24.dp
+    val DP32 = 32.dp
+    val DP64 = 64.dp
+    val DP48 = 48.dp
+    val DP72 = 72.dp
+    val DP100 = 100.dp
 }
 
 object FontSize {

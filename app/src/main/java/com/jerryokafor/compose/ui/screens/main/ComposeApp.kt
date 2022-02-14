@@ -1,10 +1,7 @@
 package com.jerryokafor.compose.ui.screens.main
 
-import androidx.compose.animation.Crossfade
-import androidx.compose.animation.animateColor
+import androidx.compose.animation.*
 import androidx.compose.animation.core.*
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -23,9 +20,8 @@ import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.jerryokafor.compose.AuthState
-import com.jerryokafor.compose.ui.screens.Home
-import com.jerryokafor.compose.ui.screens.SignUp
-import com.jerryokafor.compose.ui.screens.Splash
+import com.jerryokafor.compose.ui.screens.splash.Splash
+import com.jerryokafor.compose.ui.screens.dashboard.AppDashboard
 import com.jerryokafor.compose.ui.screens.auth.login.Login
 import com.jerryokafor.compose.ui.theme.AppTheme
 import timber.log.Timber
@@ -50,7 +46,7 @@ fun ComposeApp(
     val transition = updateTransition(transitionState, label = "splashTransition")
 
     val splashAlpha by transition.animateFloat(
-        transitionSpec = { tween(durationMillis = 100) }, label = "splashAlpha"
+        transitionSpec = { tween(durationMillis = 300) }, label = "splashAlpha"
     ) { if (it == SplashState.Shown) 1f else 0f }
 
     val contentAlpha by transition.animateFloat(
@@ -89,60 +85,47 @@ fun ComposeApp(
                 onTimeout = { transitionState.targetState = SplashState.Completed }
             )
 
-            Crossfade(
+            Box(
                 modifier = Modifier
-                    .alpha(contentAlpha), targetState = authState, animationSpec = tween(800)
+                    .alpha(contentAlpha)
+                    .padding(top = contentTopPadding)
             ) {
-                Timber.d("Auth: $it")
-                when (it) {
-                    AuthState.AUTH -> {
-                        Scaffold(
-                            modifier = Modifier.padding(top = contentTopPadding)
-                        ) {
-                            AnimatedNavHost(
-                                navController = navController,
-                                startDestination = "home",
-//                                enterTransition = { enterTransition },
-//                                exitTransition = { exitTransition },
-                            ) {
-                                composable("home") { Home(navController) }
-                                composable("signUp") { SignUp(navController) }
-                            }
-                        }
-                    }
-                    AuthState.NO_AUTH -> {
-                        Scaffold(
-                            modifier = Modifier
-                                .padding(top = contentTopPadding)
-                        ) {
-                            AnimatedNavHost(
-                                navController = navController,
-                                startDestination = "login",
-//                                enterTransition = { enterTransition },
-//                                exitTransition = { exitTransition },
-                            ) {
-                                composable(
-                                    "login",
-                                    arguments = listOf(navArgument("code") {
-                                        type = NavType.StringType
-                                    },
-                                        navArgument("state") {
+                Crossfade(targetState = authState) {
+                    Timber.d("Auth: $it")
+                    when (it) {
+                        AuthState.AUTH -> AppDashboard()
+                        AuthState.NO_AUTH -> {
+                            Scaffold {
+                                AnimatedNavHost(
+                                    navController = navController,
+                                    startDestination = "login",
+                                    enterTransition = { enterTransition },
+                                    exitTransition = { exitTransition },
+                                ) {
+                                    composable(
+                                        "login",
+                                        arguments = listOf(navArgument("code") {
                                             type = NavType.StringType
-                                        }),
-                                    deepLinks = listOf(navDeepLink {
-                                        uriPattern =
-                                            "repo-auth://callback?code={code}&state={state}"
+                                        },
+                                            navArgument("state") {
+                                                type = NavType.StringType
+                                            }),
+                                        deepLinks = listOf(navDeepLink {
+                                            uriPattern =
+                                                "repo-auth://callback?code={code}&state={state}"
+                                        }
+                                        )
+                                    ) { backstackEntry ->
+                                        Login(navController = navController)
                                     }
-                                    )
-                                ) { backstackEntry ->
-                                    Login(navController = navController)
                                 }
                             }
                         }
                     }
                 }
             }
-        }
 
+        }
     }
 }
+
