@@ -72,4 +72,7 @@ val githubBlack = Color(0xFF333333)
 val githubOrgColor = Color(0xFFEB8B47)
 val githubStarColor = Color(0xFFF1C747)
 val githubRepoColor = Color(0xFF40434D)
+val githubIssuesColor = Color(0xFF68CD67)
+val githubPullRequestColor = Color(0xFF4385F7)
+val githubDiscussionsColor = Color(0xFF6944BA)
 

@@ -27,12 +27,9 @@ import com.jerryokafor.compose.ui.compose.GithubLinkItem
 import com.jerryokafor.compose.ui.screens.dashboard.AppBarConfiguration
 import com.jerryokafor.compose.ui.screens.dashboard.NavigationItem
 import com.jerryokafor.compose.ui.screens.dashboard.profile.PinnedCard
-import com.jerryokafor.compose.ui.theme.Spacing
+import com.jerryokafor.compose.ui.theme.*
 import com.jerryokafor.compose.ui.theme.Spacing.DP16
 import com.jerryokafor.compose.ui.theme.Spacing.DP8
-import com.jerryokafor.compose.ui.theme.githubOrgColor
-import com.jerryokafor.compose.ui.theme.githubRepoColor
-import com.jerryokafor.compose.ui.theme.githubStarColor
 
 /**
  * @Author Jerry Okafor
@@ -93,19 +90,19 @@ fun HomeContent() {
 
                     Column {
                         GithubLinkItem(
-                            icon = R.drawable.ic_repository,
+                            icon = R.drawable.ic_issues,
                             text = stringResource(R.string.title_issues),
-                            iconBackground = githubRepoColor
+                            iconBackground = githubIssuesColor
                         )
                         GithubLinkItem(
-                            icon = R.drawable.ic_organisation,
+                            icon = R.drawable.ic_pull_request,
                             text = stringResource(R.string.title_pull_requests),
-                            iconBackground = githubOrgColor
+                            iconBackground = githubPullRequestColor
                         )
                         GithubLinkItem(
-                            icon = R.drawable.ic_star,
+                            icon = R.drawable.ic_dicussion,
                             text = stringResource(R.string.title_discussions),
-                            iconBackground = githubStarColor
+                            iconBackground = githubDiscussionsColor
                         )
                         GithubLinkItem(
                             icon = R.drawable.ic_repository,
