@@ -1,43 +1,56 @@
 package com.jerryokafor.compose.ui.screens.dashboard.profile
 
+import android.net.Uri
 import androidx.compose.animation.fadeIn
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.*
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.core.net.toUri
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
-import com.google.accompanist.insets.navigationBarsPadding
 import com.jerryokafor.compose.R
+import com.jerryokafor.compose.ui.compose.GithubLinkItem
+import com.jerryokafor.compose.ui.compose.ProfileContactItem
 import com.jerryokafor.compose.ui.screens.dashboard.AppBarConfiguration
 import com.jerryokafor.compose.ui.theme.*
-import com.jerryokafor.compose.ui.theme.FontSize.SP16
 import com.jerryokafor.compose.ui.theme.FontSize.SP28
 import com.jerryokafor.compose.ui.theme.Spacing.DP16
 import com.jerryokafor.compose.ui.theme.Spacing.DP32
 import com.jerryokafor.compose.ui.theme.Spacing.DP8
+import com.jerryokafor.compose.ui.util.Util
 import timber.log.Timber
 
 /**
@@ -63,6 +76,7 @@ fun Profile(
 
 @Composable
 fun ProfileContent(onLazyListScroll: (LazyListState) -> Unit) {
+    val context = LocalContext.current
     val lazyListState = rememberLazyListState()
     val nestedScrollConnection = remember {
         object : NestedScrollConnection {
@@ -80,84 +94,150 @@ fun ProfileContent(onLazyListScroll: (LazyListState) -> Unit) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .nestedScroll(nestedScrollConnection)
-            .background(color = md_theme_dark_onSurfaceVariant),
-        verticalArrangement = Arrangement.spacedBy(DP32),
+            .nestedScroll(nestedScrollConnection),
+        verticalArrangement = Arrangement.spacedBy(DP16),
         state = lazyListState
     ) {
         item {
             Card(elevation = 2.dp) {
-                Column(
-                    modifier = Modifier.padding(horizontal = DP16, vertical = DP32),
-                    verticalArrangement = Arrangement.spacedBy(DP16)
-                ) {
+                Column(modifier = Modifier.padding(horizontal = DP8, vertical = DP32)) {
                     Row(
+                        modifier = Modifier.padding(horizontal = DP8),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(DP16)
                     ) {
-                        Avatar(uri = "https://via.placeholder.com/150")
+                        Avatar(
+                            modifier = Modifier.size(width = 95.dp, height = 95.dp),
+                            uri = "https://via.placeholder.com/150"
+                        )
                         Column {
                             Text(text = "Jerry Hanks Okafor", style = TextStyle(fontSize = SP28))
                             Text(text = "jerryOkafor")
                         }
                     }
 
-                    CodeSnippetContainer(modifier = Modifier.fillMaxWidth()) {
+                    Spacer(modifier = Modifier.height(DP16))
+                    CodeSnippetContainer(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = DP8)
+                    ) {
                         Text(text = "Saving the world")
                     }
 
-                    Text(text = "Passionate Mobile (Android & iOS) Software Engineer | Machine Learning")
+                    Spacer(modifier = Modifier.height(DP16))
+                    Text(
+                        modifier = Modifier.padding(horizontal = DP8),
+                        text = "Passionate Mobile (Android & iOS) Software Engineer | Machine Learning"
+                    )
 
-                    Row(horizontalArrangement = Arrangement.spacedBy(DP16)) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_location),
-                            tint = MaterialTheme.colors.primary,
-                            contentDescription = "Localized description"
-                        )
-                        Text(text = "Lagos")
+                    Spacer(modifier = Modifier.height(DP16))
+                    ProfileContactItem(
+                        content = { Text(text = "Lagos") },
+                        icon = R.drawable.ic_location
+                    )
+
+                    ProfileContactItem(
+                        content = {
+                            Text(
+                                text = "jerryOkafor.com",
+                                style = MaterialTheme.typography.subtitle1
+                            )
+                        },
+                        icon = R.drawable.ic_link
+                    ) {
+                        Util.openUri(context, "http://jerryOkafor.com".toUri())
                     }
 
-                    Row(horizontalArrangement = Arrangement.spacedBy(DP16)) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_link),
-                            tint = MaterialTheme.colors.primary,
-                            contentDescription = "Localized description"
-                        )
-                        Text(text = "jerryhanksokafor.com")
+                    ProfileContactItem(
+                        content = {
+                            Text(
+                                text = "jerryhanksokafor@gmail.com",
+                                style = MaterialTheme.typography.subtitle1
+                            )
+                        },
+                        icon = R.drawable.ic_email
+                    )
+
+                    ProfileContactItem(
+                        content = {
+                            Text(
+                                text = "@Noms0",
+                                style = MaterialTheme.typography.subtitle1
+                            )
+                        },
+                        icon = R.drawable.ic_twitter
+                    ) {
+                        Util.openUri(context, "https://twitter.com/@Noms0".toUri())
                     }
 
-                    Row(horizontalArrangement = Arrangement.spacedBy(DP16)) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_email),
-                            tint = MaterialTheme.colors.primary,
-                            contentDescription = "Localized description"
-                        )
-                        Text(text = "jerryhanksokafor@gmail.com")
-                    }
+                    ProfileContactItem(
+                        content = {
+                            val followersTag = "followers"
+                            val followingTag = "following"
+                            val clickableText = buildAnnotatedString {
 
-                    Row(horizontalArrangement = Arrangement.spacedBy(DP16)) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_twitter),
-                            tint = MaterialTheme.colors.primary,
-                            contentDescription = "Localized description"
-                        )
-                        Text(text = "@Noms0")
-                    }
+                                pushStringAnnotation(tag = followersTag, annotation = "/followers")
+                                withStyle(
+                                    SpanStyle(
+                                        fontWeight = FontWeight.Bold,
+                                        fontFamily = MaterialTheme.typography.subtitle1.fontFamily
+                                    )
+                                ) {
+                                    append("48 ")
+                                }
 
-                    Row(horizontalArrangement = Arrangement.spacedBy(DP16)) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_user),
-                            tint = MaterialTheme.colors.primary,
-                            contentDescription = "Localized description"
-                        )
-                        Text(text = "48 followers · 32 following")
-                    }
+                                withStyle(
+                                    SpanStyle(fontWeight = FontWeight.Light)
+                                ) {
+                                    append("followers")
+                                }
+                                pop()
+
+                                pushStringAnnotation(tag = followingTag, annotation = "/following")
+                                withStyle(
+                                    SpanStyle(
+                                        fontWeight = FontWeight.Bold,
+                                        fontFamily = MaterialTheme.typography.subtitle1.fontFamily
+                                    )
+                                ) {
+                                    append(" · 32 ")
+                                }
+
+                                withStyle(
+                                    SpanStyle(fontWeight = FontWeight.Light)
+                                ) {
+                                    append("following")
+                                }
+                                pop()
+                            }
+                            ClickableText(text = clickableText) {
+                                with(clickableText) {
+                                    getStringAnnotations(
+                                        followersTag,
+                                        start = it,
+                                        end = it
+                                    ).firstOrNull()?.let {
+                                        Timber.d("Selected: ${it.item}")
+                                    }
+                                    getStringAnnotations(
+                                        followingTag,
+                                        start = it,
+                                        end = it
+                                    ).firstOrNull()?.let {
+                                        Timber.d("Selected: ${it.item}")
+                                    }
+                                }
+                            }
+                        },
+                        icon = R.drawable.ic_user
+                    )
                 }
 
             }
         }
         item {
-            Surface {
+            Card(elevation = 2.dp) {
                 Column(modifier = Modifier.padding(bottom = DP32)) {
                     Text(modifier = Modifier.padding(DP16), text = "jerryOkafor/README.md")
                     Divider()
@@ -176,21 +256,65 @@ fun ProfileContent(onLazyListScroll: (LazyListState) -> Unit) {
         }
 
         item {
-            Surface {
-                Column(modifier = Modifier.padding(bottom = DP32)) {
-                    Text(modifier = Modifier.padding(DP16), text = "jerryOkafor/README.md")
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight(),
+                elevation = 2.dp
+            ) {
+                Column(
+                    modifier = Modifier.padding(bottom = DP32),
+                    verticalArrangement = Arrangement.spacedBy(DP16)
+                ) {
+                    Row(
+                        modifier = Modifier.padding(vertical = DP16, horizontal = DP16),
+                        horizontalArrangement = Arrangement.spacedBy(DP16)
+                    ) {
+                        Icon(
+                            modifier = Modifier.rotate(-90F),
+                            painter = painterResource(id = R.drawable.ic_pin),
+                            tint = MaterialTheme.colors.primary,
+                            contentDescription = "Localized description"
+                        )
+                        Text(
+                            text = "Pinned",
+                            style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                        )
+                    }
+
+                    val items = (0..5).map { "Hello" }
+
+                    LazyRow(horizontalArrangement = Arrangement.spacedBy(DP16)) {
+                        item { Spacer(modifier = Modifier.width(DP8)) }
+                        items(items) {
+                            PinnedCard(modifier = Modifier.width(300.dp))
+                        }
+                        item { Spacer(modifier = Modifier.width(DP8)) }
+                    }
+
                     Divider()
-                    Text(
-                        modifier = Modifier.padding(DP16),
-                        text = """
-                🔭 Passionate software engineer with a knack for delivering high quality, maintainable and scalable software product in time. Currently I work for @velatech and consulting for @mintfintech - building awesome products together with my team. I read, follow and write on all things tech especially mobile application development and Machine Learning.
-
-                🌱 Currently learning Artificial Intelligence and Machine Learning, presently, I have completed a Deep Learning Nanodegree on Udacity - first step to quenching my thirst for a career in Machine Learning.
-
-                👯 Open to collaboration on projects that explores the applications of Machine Learning to mobile devices
-            """.trimIndent()
-                    )
+                    Column(modifier = Modifier.wrapContentHeight()) {
+                        GithubLinkItem(
+                            icon = R.drawable.ic_repository,
+                            text = stringResource(R.string.title_repositories),
+                            subText = "175",
+                            iconBackground = githubRepoColor
+                        )
+                        GithubLinkItem(
+                            icon = R.drawable.ic_organisation,
+                            text = stringResource(R.string.title_organisations),
+                            subText = "2",
+                            iconBackground = githubOrgColor
+                        )
+                        GithubLinkItem(
+                            icon = R.drawable.ic_star,
+                            text = stringResource(R.string.title_starred),
+                            subText = "180",
+                            iconBackground = githubStarColor
+                        )
+                    }
                 }
+
             }
         }
     }
@@ -210,9 +334,9 @@ fun CodeSnippetContainer(modifier: Modifier = Modifier, content: @Composable () 
 }
 
 @Composable
-private fun Avatar(uri: String) {
+private fun Avatar(modifier: Modifier = Modifier, uri: String) {
     Surface(
-        Modifier.size(width = 95.dp, height = 95.dp),
+        modifier = modifier.size(width = 95.dp, height = 95.dp),
         shape = CircleShape,
 //        border = BorderStroke(width = 1.dp, MaterialTheme.colors.primary)
     ) {
@@ -250,7 +374,73 @@ private fun Avatar(uri: String) {
 }
 
 @Composable
+fun PinnedCard(modifier: Modifier = Modifier) {
+    Surface(
+        border = BorderStroke(width = 1.dp, color = md_theme_dark_onSurfaceVariant),
+        shape = RoundedCornerShape(5)
+    ) {
+
+        Column(modifier = modifier.padding(DP16)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(DP16)) {
+                Avatar(
+                    modifier = Modifier.size(width = 24.dp, height = 24.dp),
+                    uri = "https://via.placeholder.com/150"
+                )
+                Text(text = "jerryOkafor")
+            }
+
+            Text(
+                text = "TimelineView",
+                style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold)
+            )
+            Text(
+                text = "A simple Timeline View that dem.......",
+                style = TextStyle(),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+            Spacer(modifier = Modifier.height(DP32))
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(DP8),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    modifier = Modifier.size(width = 16.dp, height = 16.dp),
+                    painter = painterResource(id = R.drawable.ic_star),
+                    tint = MaterialTheme.colors.primary,
+                    contentDescription = "Localized description"
+                )
+                Text(text = "355")
+
+                Icon(
+                    modifier = Modifier
+                        .size(width = 16.dp, height = 16.dp)
+                        .scale(2.5f),
+                    painter = painterResource(id = R.drawable.ic_dot),
+                    tint = MaterialTheme.colors.primary,
+                    contentDescription = "Localized description"
+                )
+                Text(text = "Kotlin")
+            }
+        }
+
+    }
+
+}
+
+
+@Composable
 @Preview
 fun ProfileContentPreview() {
     ProfileContent() {}
+}
+
+@Composable
+@Preview
+fun PinnedCardPreview() {
+    PinnedCard(
+        modifier = Modifier
+            .wrapContentHeight()
+            .width(250.dp)
+    )
 }

@@ -55,5 +55,21 @@ val md_theme_dark_inverseOnSurface = Color(0xFF1b1b1b)
 val md_theme_dark_inverseSurface = Color(0xFFe2e2e6)
 
 val seed = Color(0xFF4183c4)
-val error = Color(0xFFba1b1b)
-val github_black = Color(0xFF333333)
+val error = Color(0xFFFF0000)
+
+
+//Github Color
+val githubCyanBlueAzure = Color(0xFF4078C0)
+val githubApple = Color(0xFF6CC644)
+val githubMahogany = Color(0xFFBD2C00)
+val githubBurntOrange = Color(0xFFC9510C)
+val githubDarkLavender = Color(0xFF6E5494)
+val githubLotion = Color(0xFFFAFAFA)
+val githubCultured = Color(0xFFF5F5F5)
+val githubBlack = Color(0xFF333333)
+
+
+val githubOrgColor = Color(0xFFEB8B47)
+val githubStarColor = Color(0xFFF1C747)
+val githubRepoColor = Color(0xFF40434D)
+

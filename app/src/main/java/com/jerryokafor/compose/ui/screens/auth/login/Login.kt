@@ -37,7 +37,8 @@ import com.jerryokafor.compose.R
 import com.jerryokafor.compose.ui.screens.state.UIInfo
 import com.jerryokafor.compose.ui.theme.FontSize
 import com.jerryokafor.compose.ui.theme.Spacing
-import com.jerryokafor.compose.ui.theme.github_black
+import com.jerryokafor.compose.ui.theme.githubBlack
+import com.jerryokafor.compose.ui.util.Util
 import com.jerryokafor.compose.ui.widget.InfoBadge
 import com.jerryokafor.compose.ui.widget.OutlineProgressButton
 import timber.log.Timber
@@ -65,11 +66,6 @@ fun AnimatedVisibilityScope.Login(
         viewModel.exchangeCodeForAccessToken(oAuthState = oAuthState, oAuthResponse = it)
     }
 
-    fun openUri(uri: Uri) {
-        val builder = CustomTabsIntent.Builder()
-        val customTabsIntent = builder.build()
-        customTabsIntent.launchUrl(context, uri)
-    }
 
     val onContinueBtnClick: () -> Unit = {
         oAuthLoginLauncher.launch(oAuthState)
@@ -79,7 +75,7 @@ fun AnimatedVisibilityScope.Login(
         state = state,
         onContinueBtnClick = onContinueBtnClick
     ) {
-        openUri(it)
+        Util.openUri(context, it)
     }
 }
 
@@ -145,7 +141,7 @@ fun LoginScreenContent(
             onClick = onContinueBtnClick,
             loading = state.loading,
             colors = ButtonDefaults.outlinedButtonColors(
-                backgroundColor = github_black,
+                backgroundColor = githubBlack,
                 contentColor = Color.White
             )) {
             Text(text = stringResource(R.string.sign_with_github))
@@ -165,6 +161,8 @@ fun LoginScreenContent(
                 annotation = stringResource(R.string.github_terms_of_use_url)
             )
             withStyle(style = linkStyle) { append("Terms of use") }
+            pop()
+
             append(" and ")
             pushStringAnnotation(
                 tag = psUrlTag,

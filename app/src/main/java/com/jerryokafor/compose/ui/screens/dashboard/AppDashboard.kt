@@ -14,7 +14,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.LayoutDirection
@@ -110,7 +113,7 @@ fun AppDashboardContent(
         }
     }
 
-    Scaffold(modifier = Modifier,
+    Scaffold(modifier = Modifier, backgroundColor = MaterialTheme.colors.background,
         topBar = {
             TopBar(
                 appBarConfiguration = appBarConfiguration,
@@ -180,20 +183,29 @@ fun TopBar(
     currentRoute: String,
     onHandleTopAppBarAction: (TopAppBarAction) -> Unit,
 ) {
+    val elevation = when (currentRoute) {
+        NavigationItem.Home.route -> 0.dp
+        else -> 2.dp
+    }
     TopAppBar(
-        elevation = 2.dp, //Todo, this should be dynamic to achieve the nice scrolling behavior
+        elevation = elevation,
         title = {
-            Column(
-//                modifier = Modifier.offset {
-//                    IntOffset(
-//                        x = 0,
-//                        y = -topAppTitleBarOffset.roundToInt()
-//                    )
-//                }
-            ) {
-                Text(text = appBarConfiguration.title, fontSize = 14.sp)
-                Text(text = appBarConfiguration.subTitle, fontSize = 20.sp)
+            Crossfade(targetState = currentRoute) {
+                when (it) {
+                    NavigationItem.Profile.route -> Column {
+                        Text(text = appBarConfiguration.title, fontSize = 14.sp)
+                        Text(text = appBarConfiguration.subTitle, fontSize = 20.sp)
+                    }
+                    else -> {
+                        Text(
+                            text = appBarConfiguration.title,
+                            fontSize = 20.sp,
+                            style = TextStyle(fontWeight = FontWeight.Bold)
+                        )
+                    }
+                }
             }
+
         },
         backgroundColor = MaterialTheme.colors.onPrimary,
         actions = {
@@ -250,6 +262,7 @@ fun BottomNavigationBar(navController: NavHostController, currentRoute: String) 
         NavigationItem.Profile
     )
 
+
     BottomNavigation(
         backgroundColor = MaterialTheme.colors.onPrimary,
         modifier = Modifier
@@ -275,7 +288,12 @@ fun BottomNavigationBar(navController: NavHostController, currentRoute: String) 
         items.forEach { item ->
             BottomNavigationItem(
                 icon = { Icon(painterResource(id = item.icon), contentDescription = item.title) },
-                label = { Text(text = item.title) },
+                label = {
+                    Text(
+                        text = item.title,
+                        style = MaterialTheme.typography.h6.copy(fontSize = 12.sp)
+                    )
+                },
                 unselectedContentColor = MaterialTheme.colors.onSurface.copy(alpha = 0.3f),
                 selectedContentColor = MaterialTheme.colors.primary,
                 alwaysShowLabel = true,

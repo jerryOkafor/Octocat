@@ -13,4 +13,10 @@
     <string name="sign_with_github">SIGN IN WITH GITHUB</string>
     <string name="github_terms_of_use_url">https://docs.github.com/en/github/site-policy/github-terms-of-service</string>
     <string name="github_privacy_policy_url">https://docs.github.com/en/github/site-policy/github-privacy-statement</string>
+    <string name="title_repositories">Repositories</string>
+    <string name="title_organisations">Organisations</string>
+    <string name="title_starred">Starred</string>
+    <string name="title_issues">Issues</string>
+    <string name="title_pull_requests">Pull Requests</string>
+    <string name="title_discussions">Discussions</string>
 </resources>
