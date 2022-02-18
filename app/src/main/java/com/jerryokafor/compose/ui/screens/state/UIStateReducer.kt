@@ -5,4 +5,4 @@ package com.jerryokafor.compose.ui.screens.state
  * @Project <Project>
  */
 
-typealias UIStateReducer<S> = (previousSate: S, action: UIStateAction) -> S
+typealias UIStateReducer<S> = (previousSate: S, action: UIState.Action) -> S

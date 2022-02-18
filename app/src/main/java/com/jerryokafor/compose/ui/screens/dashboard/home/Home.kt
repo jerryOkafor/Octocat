@@ -1,6 +1,7 @@
 package com.jerryokafor.compose.ui.screens.dashboard.home
 
 import androidx.compose.animation.*
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,6 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -115,6 +117,77 @@ fun HomeContent() {
                             iconBackground = githubOrgColor
                         )
 
+                    }
+
+                    Spacer(modifier = Modifier.height(DP8))
+                    Divider(modifier = Modifier.padding(horizontal = DP16))
+//                    Spacer(modifier = Modifier.height(DP8))
+                    Column(
+                        modifier = Modifier.padding(horizontal = DP16),
+                        verticalArrangement = Arrangement.spacedBy(DP16)
+                    ) {
+                        Text(text = "Favourites")
+                        Spacer(modifier = Modifier.height(DP16))
+                        Text(
+                            text = "Add favorite repository for quick access at any time, without having to search",
+                            style = TextStyle(fontWeight = FontWeight.Light),
+                            textAlign = TextAlign.Center
+                        )
+
+                        TextButton(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(55.dp),
+                            onClick = { /*TODO*/ },
+                            border = BorderStroke(
+                                width = 2.dp,
+                                color = MaterialTheme.colors.background
+                            )
+                        ) {
+                            Text(text = "ADD FAVOURITE")
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(DP8))
+                    Divider(modifier = Modifier.padding(horizontal = DP16))
+//                    Spacer(modifier = Modifier.height(DP8))
+                    Column(
+                        modifier = Modifier.padding(horizontal = DP16),
+                        verticalArrangement = Arrangement.spacedBy(DP16)
+                    ) {
+                        Text(text = "Shortcuts")
+                        Spacer(modifier = Modifier.height(DP16))
+                        Text(text = "The things your need, one tap away")
+                        Text(
+                            text = "Fast access your list of issues, Pull Requests, or Discussions",
+                            style = TextStyle(fontWeight = FontWeight.Light),
+                            textAlign = TextAlign.Center
+                        )
+
+                        TextButton(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(55.dp),
+                            onClick = { /*TODO*/ },
+                            border = BorderStroke(
+                                width = 2.dp,
+                                color = MaterialTheme.colors.background
+                            )
+                        ) {
+                            Text(text = "GET STARTED")
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(DP8))
+                    Divider(modifier = Modifier.padding(horizontal = DP16))
+//                    Spacer(modifier = Modifier.height(DP8))
+                    Column(
+                        modifier = Modifier.padding(horizontal = DP16),
+                        verticalArrangement = Arrangement.spacedBy(DP16)
+                    ) {
+                        Text(text = "Recent")
+                        Spacer(modifier = Modifier.height(DP16))
+                        Text(text = "The things your need, one tap away")
                     }
                 }
 

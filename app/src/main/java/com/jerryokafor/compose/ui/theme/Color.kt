@@ -62,6 +62,10 @@ val error = Color(0xFFFF0000)
 val githubCyanBlueAzure = Color(0xFF4078C0)
 val githubApple = Color(0xFF6CC644)
 val githubMahogany = Color(0xFFBD2C00)
+val githubSpanishGray = Color(0xFF999999)
+val githubGraniteGray = Color(0xFF666666)
+val githubDarkCharcoal = Color(0xFF333333)
+
 val githubBurntOrange = Color(0xFFC9510C)
 val githubDarkLavender = Color(0xFF6E5494)
 val githubLotion = Color(0xFFFAFAFA)
@@ -75,4 +79,5 @@ val githubRepoColor = Color(0xFF40434D)
 val githubIssuesColor = Color(0xFF68CD67)
 val githubPullRequestColor = Color(0xFF4385F7)
 val githubDiscussionsColor = Color(0xFF6944BA)
+
 

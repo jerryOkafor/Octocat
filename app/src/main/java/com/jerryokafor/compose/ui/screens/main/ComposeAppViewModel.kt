@@ -1,19 +1,29 @@
 package com.jerryokafor.compose.ui.screens.main
 
-import androidx.lifecycle.ViewModel
 import com.jerryokafor.compose.AuthState
-import com.jerryokafor.compose.domain.model.repository.AuthRepository
+import com.jerryokafor.compose.domain.usecase.AuthStateUseCase
+import com.jerryokafor.compose.ui.screens.auth.login.LoginUIState
+import com.jerryokafor.compose.ui.screens.state.BaseViewModel
+import com.jerryokafor.compose.ui.screens.state.UIAction
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.debounce
 import javax.inject.Inject
 
 /**
  * @Author <Author>
  * @Project <Project>
  */
+
+
 @HiltViewModel
 class ComposeAppViewModel
-@Inject constructor(authRepository: AuthRepository) : ViewModel() {
-    val authState: SharedFlow<AuthState> = authRepository.authState
+@Inject constructor(authStateUseCase: AuthStateUseCase) :
+    BaseViewModel<LoginUIState, UIAction>(
+        initialState = { LoginUIState() },
+        reducer = { previousSate, _ ->
+            previousSate
+        }) {
+    val authState: SharedFlow<AuthState> = authStateUseCase.authState
+
+
 }

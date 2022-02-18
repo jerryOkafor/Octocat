@@ -1,28 +1,26 @@
-package com.jerryokafor.compose.data.respository
+package com.jerryokafor.compose.data.usecase
 
-import com.jerryokafor.compose.AuthState
 import com.jerryokafor.compose.domain.datasource.AppDataSource
 import com.jerryokafor.compose.domain.datasource.AuhDataSource
 import com.jerryokafor.compose.domain.model.Resource
-import com.jerryokafor.compose.domain.model.repository.AuthRepository
+import com.jerryokafor.compose.domain.usecase.LoginUseCase
 import com.jerryokafor.compose.ktx.handle
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 /**
  * @Author <Author>
  * @Project <Project>
  */
-class MainAuthRepository(
+
+class GithubLoginUseCase(
     private val appDataSource: AppDataSource,
     private val authDataSource: AuhDataSource,
-    private val defaultDispatcher: CoroutineDispatcher,
-) : AuthRepository {
-    override fun login(code: String) = flow {
+    private val defaultDispatcher: CoroutineDispatcher
+) : LoginUseCase {
+    override suspend operator fun invoke(code: String) = flow {
         try {
             emit(Resource.Loading)
             val accessToken = authDataSource.getAccessToken(code = code)
@@ -39,8 +37,4 @@ class MainAuthRepository(
             emit(Resource.Failure(errorMsg))
         }
     }.flowOn(defaultDispatcher)
-
-    override val authState: SharedFlow<AuthState> = appDataSource.authState
-
-    override suspend fun logout() = appDataSource.logout()
 }

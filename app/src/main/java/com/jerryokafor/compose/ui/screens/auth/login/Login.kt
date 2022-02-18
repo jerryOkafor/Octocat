@@ -63,7 +63,12 @@ fun AnimatedVisibilityScope.Login(
     val oAuthLoginLauncher = rememberLauncherForActivityResult(
         contract = OAuthActivity.ResultContract()
     ) {
-        viewModel.exchangeCodeForAccessToken(oAuthState = oAuthState, oAuthResponse = it)
+        viewModel.onAction(
+            LoginViewModel.Action.ExchangeCodeForAccessToken(
+                oAuthState = oAuthState,
+                oAuthResponse = it
+            )
+        )
     }
 
 

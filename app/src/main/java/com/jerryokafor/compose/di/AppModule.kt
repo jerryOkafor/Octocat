@@ -2,12 +2,16 @@ package com.jerryokafor.compose.di
 
 import android.content.Context
 import com.jerryokafor.compose.data.datasource.KeyValueStore
-import com.jerryokafor.compose.data.respository.MainAuthRepository
+import com.jerryokafor.compose.data.usecase.GithubAuthStateUseCase
+import com.jerryokafor.compose.data.usecase.GithubLogOutUseCase
+import com.jerryokafor.compose.data.usecase.GithubLoginUseCase
 import com.jerryokafor.compose.di.dispatchers.IoDispatcher
 import com.jerryokafor.compose.di.scope.ApplicationScope
 import com.jerryokafor.compose.domain.datasource.AppDataSource
 import com.jerryokafor.compose.domain.datasource.AuhDataSource
-import com.jerryokafor.compose.domain.model.repository.AuthRepository
+import com.jerryokafor.compose.domain.usecase.AuthStateUseCase
+import com.jerryokafor.compose.domain.usecase.LogOutUseCase
+import com.jerryokafor.compose.domain.usecase.LoginUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,14 +42,28 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideAuthRepository(
+    fun provideGithubLoginUseCase(
         appDataSource: AppDataSource,
         authDataSource: AuhDataSource,
         @IoDispatcher defaultDispatcher: CoroutineDispatcher
-    ): AuthRepository =
-        MainAuthRepository(
+    ): LoginUseCase =
+        GithubLoginUseCase(
             appDataSource = appDataSource,
             authDataSource = authDataSource,
             defaultDispatcher = defaultDispatcher
         )
+
+    @Provides
+    @Singleton
+    fun provideGithubLogOutUseCase(
+        appDataSource: AppDataSource
+    ): LogOutUseCase =
+        GithubLogOutUseCase(appDataSource = appDataSource)
+
+    @Provides
+    @Singleton
+    fun provideAuthStateUseCase(
+        appDataSource: AppDataSource
+    ): AuthStateUseCase =
+        GithubAuthStateUseCase(appDataSource = appDataSource)
 }

@@ -32,5 +32,6 @@ object FontSize {
     val SP14 = 14.sp
     val SP16 = 16.sp
     val SP18 = 18.sp
+    val SP20 = 20.sp
     val SP28 = 28.sp
 }
