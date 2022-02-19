@@ -14,12 +14,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -34,12 +32,12 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.jerryokafor.compose.R
-import com.jerryokafor.compose.ui.screens.dashboard.home.Explore
+import com.jerryokafor.compose.ui.screens.dashboard.explore.Explore
 import com.jerryokafor.compose.ui.screens.dashboard.home.Home
-import com.jerryokafor.compose.ui.screens.dashboard.home.Notifications
+import com.jerryokafor.compose.ui.screens.dashboard.notification.Notifications
 import com.jerryokafor.compose.ui.screens.dashboard.profile.Profile
+import com.jerryokafor.compose.ui.screens.dashboard.profile.ProfileViewModel
 import timber.log.Timber
-import kotlin.math.roundToInt
 
 /**
  * @Author Jerry Okafor
@@ -58,7 +56,10 @@ sealed class NavigationItem(var route: String, var icon: Int, var title: String)
 
 @ExperimentalAnimationApi
 @Composable
-fun AppDashboard(viewModel: HomeViewModel = hiltViewModel()) {
+fun AppDashboard(
+    viewModel: HomeViewModel = hiltViewModel(),
+    profileViewModel: ProfileViewModel = hiltViewModel()
+) {
     val navController = rememberAnimatedNavController()
     val (appBarConfig, setAppBarConfig) = remember { mutableStateOf(AppBarConfiguration()) }
     val onAppConfigurationChange: (AppBarConfiguration) -> Unit = {
@@ -73,6 +74,7 @@ fun AppDashboard(viewModel: HomeViewModel = hiltViewModel()) {
     }
     AppDashboardContent(
         navController = navController,
+        profileViewModel = profileViewModel,
         appBarConfiguration = appBarConfig,
         onAppConfigurationChange = onAppConfigurationChange
     )
@@ -90,6 +92,7 @@ sealed class TopAppBarAction {
 @Composable
 fun AppDashboardContent(
     navController: NavHostController,
+    profileViewModel: ProfileViewModel,
     appBarConfiguration: AppBarConfiguration,
     onAppConfigurationChange: (AppBarConfiguration) -> Unit
 ) {
@@ -129,6 +132,7 @@ fun AppDashboardContent(
         }) { innerPadding ->
         Navigation(
             navController = navController,
+            profileViewModel = profileViewModel,
             contentPadding = innerPadding,
             onAppConfigurationChange = onAppConfigurationChange,
             onLazyListScroll = onScroll
@@ -139,6 +143,7 @@ fun AppDashboardContent(
 @Composable
 fun Navigation(
     navController: NavHostController,
+    profileViewModel: ProfileViewModel,
     contentPadding: PaddingValues,
     onAppConfigurationChange: (AppBarConfiguration) -> Unit,
     onLazyListScroll: (LazyListState) -> Unit
@@ -170,6 +175,7 @@ fun Navigation(
         composable(NavigationItem.Profile.route) {
             Profile(
                 onAppConfigurationChange = onAppConfigurationChange,
+                viewModel = profileViewModel,
                 onLazyListScroll = onLazyListScroll
             )
         }
@@ -332,7 +338,12 @@ fun BottomNavigationBarPreview() {
 @Composable
 fun AppDashboardContentPreview() {
     val navController = rememberAnimatedNavController()
-    AppDashboardContent(navController, AppBarConfiguration(title = "Welcome")) {}
+//    val profileViewModel: ProfileViewModel = hiltViewModel()
+//    AppDashboardContent(
+//        navController = navController,
+//        profileViewModel = profileViewModel,
+//        appBarConfiguration = AppBarConfiguration(title = "Welcome")
+//    ) {}
 }
 
 

@@ -1,6 +1,6 @@
 package com.jerryokafor.compose.data.datasource
 
-import com.jerryokafor.compose.data.api.AuthService
+import com.jerryokafor.compose.data.api.service.AuthService
 import com.jerryokafor.compose.data.api.request.AccessTokenRequest
 import com.jerryokafor.compose.di.dispatchers.ClientId
 import com.jerryokafor.compose.di.dispatchers.ClientSecret

@@ -3,8 +3,8 @@ package com.jerryokafor.compose.ui.screens.main
 import com.jerryokafor.compose.AuthState
 import com.jerryokafor.compose.domain.usecase.AuthStateUseCase
 import com.jerryokafor.compose.ui.screens.auth.login.LoginUIState
-import com.jerryokafor.compose.ui.screens.state.BaseViewModel
-import com.jerryokafor.compose.ui.screens.state.UIAction
+import com.jerryokafor.compose.ui.state.BaseViewModel
+import com.jerryokafor.compose.ui.state.UIAction
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharedFlow
 import javax.inject.Inject

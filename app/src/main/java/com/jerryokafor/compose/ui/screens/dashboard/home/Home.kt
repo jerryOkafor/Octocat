@@ -195,19 +195,3 @@ fun HomeContent() {
         }
     }
 }
-
-@Composable
-fun Notifications(onAppConfigurationChange: (AppBarConfiguration) -> Unit) {
-    SideEffect {
-        onAppConfigurationChange(AppBarConfiguration(title = "Notifications"))
-    }
-
-}
-
-@Composable
-fun Explore(onAppConfigurationChange: (AppBarConfiguration) -> Unit) {
-    SideEffect {
-        onAppConfigurationChange(AppBarConfiguration(title = "Explore"))
-    }
-
-}

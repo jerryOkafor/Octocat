@@ -1,4 +1,4 @@
-package com.jerryokafor.compose.ui.screens.state
+package com.jerryokafor.compose.ui.state
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,9 +14,9 @@ import kotlinx.coroutines.flow.asStateFlow
  * point of action invocation while exposing an immutable data flow for composable views
  * in the form of [StateFlow]
  * */
-abstract class BaseViewModel<T : UIState, A : UIAction>(
-    initialState: () -> T,
-    reducer: UIStateReducer<T>?
+abstract class BaseViewModel<State : UIState, Action : UIAction>(
+    initialState: () -> State,
+    reducer: UIStateReducer<State>?
 ) :
     ViewModel() {
 
@@ -36,14 +36,12 @@ abstract class BaseViewModel<T : UIState, A : UIAction>(
      * Redux kind of state reducer. This defines how the next state is computed
      * from the current event/Action and  the previous state
      * */
-    protected val nextState: UIStateReducer<T> =
-        reducer ?: { previousSate: T, _: UIState.Action ->
-            previousSate
-        }
+    protected val nextState: UIStateReducer<State> =
+        reducer ?: { previousSate: State, _: UIState.Action -> previousSate }
 
     /**
-     * Represents actions of type [A] that can be pushed from the the
+     * Represents actions of type [Action] that can be pushed from the the
      * view to the  ViewModel in line with Unidirectional Data Floe (UDF)
      * */
-    protected open fun onAction(action: A) {}
+    open fun onAction(action: Action) {}
 }

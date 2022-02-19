@@ -6,10 +6,10 @@ import com.jerryokafor.compose.domain.model.onFailure
 import com.jerryokafor.compose.domain.model.onLoading
 import com.jerryokafor.compose.domain.model.onSuccess
 import com.jerryokafor.compose.domain.usecase.LoginUseCase
-import com.jerryokafor.compose.ui.screens.state.BaseViewModel
-import com.jerryokafor.compose.ui.screens.state.UIAction
-import com.jerryokafor.compose.ui.screens.state.UIInfo
-import com.jerryokafor.compose.ui.screens.state.UIState
+import com.jerryokafor.compose.ui.state.BaseViewModel
+import com.jerryokafor.compose.ui.state.UIAction
+import com.jerryokafor.compose.ui.state.UIInfo
+import com.jerryokafor.compose.ui.state.UIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -23,8 +23,8 @@ import javax.inject.Inject
 data class LoginUIState(
     override val loading: Boolean = false,
     override val info: UIInfo? = null
-) : UIState() {
-    sealed class State : UIState.Action() {
+) : UIState {
+    sealed class State : UIState.Action {
         data class Login(
             override val loading: Boolean = false,
             override val info: UIInfo? = null
@@ -98,7 +98,7 @@ class LoginViewModel @Inject constructor(private val login: LoginUseCase) :
         }
     }
 
-    sealed class Action : UIAction() {
+    sealed class Action : UIAction {
         data class ExchangeCodeForAccessToken(
             val oAuthState: String,
             val oAuthResponse: OAuthResponse?

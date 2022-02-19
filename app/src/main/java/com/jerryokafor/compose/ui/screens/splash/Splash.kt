@@ -23,7 +23,7 @@ import kotlinx.coroutines.delay
  * @Date 19/10/2021 09:55
  */
 
-private const val SplashWaitTime: Long = 1000
+private const val SplashWaitTime: Long = 1
 
 @Composable
 fun Splash(modifier: Modifier = Modifier, onTimeout: () -> Unit) {
@@ -39,13 +39,13 @@ fun Splash(modifier: Modifier = Modifier, onTimeout: () -> Unit) {
             currentOnTimeout()
         }
 
-        Image(
-            painterResource(id = R.drawable.logo),
-            contentDescription = null,
-            Modifier
-                .size(100.dp, 100.dp)
-                .align(Alignment.Center)
-        )
+//        Image(
+//            painterResource(id = R.drawable.logo),
+//            contentDescription = null,
+//            Modifier
+//                .size(160.dp, 160.dp)
+//                .align(Alignment.Center)
+//        )
     }
 }
 

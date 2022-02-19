@@ -10,9 +10,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.*
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -59,6 +57,7 @@ import timber.log.Timber
 @Composable
 fun Profile(
     onAppConfigurationChange: (AppBarConfiguration) -> Unit,
+    viewModel: ProfileViewModel,
     onLazyListScroll: (LazyListState) -> Unit
 ) {
     SideEffect {
@@ -69,6 +68,12 @@ fun Profile(
             )
         )
     }
+
+    LaunchedEffect(viewModel){
+        viewModel.onAction(ProfileViewModel.Action.GetUserProfile)
+    }
+
+    val state = viewModel.state.collectAsState()
 
     ProfileContent(onLazyListScroll = onLazyListScroll)
 }

@@ -1,4 +1,4 @@
-package com.jerryokafor.compose.data.api
+package com.jerryokafor.compose.data.api.service
 
 import com.jerryokafor.compose.data.api.request.AccessTokenRequest
 import com.jerryokafor.compose.data.api.response.AccessTokenResponse

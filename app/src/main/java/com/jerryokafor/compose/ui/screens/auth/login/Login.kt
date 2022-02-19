@@ -2,7 +2,6 @@ package com.jerryokafor.compose.ui.screens.auth.login
 
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.foundation.Image
@@ -34,7 +33,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.jerryokafor.compose.OAuthActivity
 import com.jerryokafor.compose.R
-import com.jerryokafor.compose.ui.screens.state.UIInfo
+import com.jerryokafor.compose.ui.state.UIInfo
 import com.jerryokafor.compose.ui.theme.FontSize
 import com.jerryokafor.compose.ui.theme.Spacing
 import com.jerryokafor.compose.ui.theme.githubBlack

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ComposeTemplate</string>
+    <string name="app_name">Octocat</string>
     <string name="msg_enter_optional_password">Enter optional password</string>
     <string name="title_password">Password</string>
     <string name="msg_enter_optional_username">Enter optional username</string>
