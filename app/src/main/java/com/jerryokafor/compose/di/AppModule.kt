@@ -1,6 +1,7 @@
 package com.jerryokafor.compose.di
 
 import android.content.Context
+import com.apollographql.apollo3.ApolloClient
 import com.jerryokafor.compose.data.api.service.UserService
 import com.jerryokafor.compose.data.datasource.KeyValueStore
 import com.jerryokafor.compose.data.usecase.GithubAuthStateUseCase
@@ -72,6 +73,6 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideGetUserUseCase(userService: UserService): GetUserUseCase =
-        GithubGetUserUseCase(userService = userService)
+    fun provideGetUserUseCase(apolloClient: ApolloClient): GetUserUseCase =
+        GithubGetUserUseCase(apolloClient = apolloClient)
 }

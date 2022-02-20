@@ -1,0 +1,77 @@
+query UserData($name:String!){
+    viewer {
+        id
+        login
+        name
+        avatarUrl
+        company
+        bio
+        bioHTML
+        websiteUrl
+        email
+        location
+        twitterUsername
+        status {
+            id
+            emoji
+            message
+        }
+        followers {
+            totalCount
+        }
+        following {
+            totalCount
+        }
+        publicRepos: repositories(
+            privacy: PUBLIC
+            orderBy: {field: UPDATED_AT, direction: DESC}
+        ) {
+            totalCount
+        }
+        privateRepos: repositories(
+            privacy: PRIVATE
+            orderBy: {field: UPDATED_AT, direction: DESC}
+        ) {
+            totalCount
+        }
+        pinnedItems(first: 5, types: [REPOSITORY, GIST]) {
+            totalCount
+            edges {
+                node {
+                    ... on Repository {
+                        name
+                        description
+                        stargazers {
+                            totalCount
+                        }
+                        primaryLanguage {
+                            name
+                        }
+                        languages(first: 5) {
+                            nodes {
+                                name
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        starredRepositories {
+            totalCount
+        }
+        repository(name: $name) {
+            object(expression: "master:README.md") {
+                commitResourcePath
+                ... on Blob {
+                    text
+                    repository {
+                        name
+                        nameWithOwner
+                    }
+                }
+            }
+        }
+        createdAt
+        updatedAt
+    }
+}

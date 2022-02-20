@@ -15,39 +15,25 @@ data class Plan(
     val collaborators: Int
 )
 
+data class Status(val emoji: String?, val message: String?)
+
 data class User(
     val login: String,
-    val id: Long,
+    val id: String,
     val avatarUrl: String,
-    val url: String,
-    val followersUrl: String,
-    val followingUrl: String,
-    val gitUrl: String?,
-    val starredUrl: String,
-    val subscriptionUrl: String?,
-    val organisationUrl: String?,
-    val reposUrl: String,
-    val eventsUrl: String,
-    val type: String,
-    val siteAdmin: Boolean = false,
     val name: String,
+    val status: Status,
     val company: String?,
     val blog: String,
     val location: String,
     val email: String,
-    val hireable: Boolean = false,
     val bio: String,
     val twitterUsername: String,
     val publicRepos: Int,
-    val publicGits: Int,
     val followers: Int,
     val following: Int,
-    val privateGists: Int,
     val totalPrivateRepos: Int,
     val ownedPrivateRepos: Int,
-    val diskUsage: Int,
-    val collaborators: Int,
-    val plan: Plan,
     val createdAt: String,
     val updatedAt: String
 )

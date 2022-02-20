@@ -1,5 +1,7 @@
 package com.jerryokafor.compose.di
 
+import com.apollographql.apollo3.ApolloClient
+import com.apollographql.apollo3.network.okHttpClient
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -86,6 +88,32 @@ object NetworkModule {
 
         return builder.build()
     }
+
+    @Provides
+    @Singleton
+    fun provideApolloClient(keyValueStore: AppDataSource,@ApiOkHttClient okHttpClient: OkHttpClient): ApolloClient {
+        val builder = OkHttpClient.Builder()
+            .addInterceptor(AuthorizationInterceptor(keyValueStore))
+//        builder.addInterceptor(Interceptor {
+//            val originalRequest = it.request()
+//            val newRequest = originalRequest.newBuilder()
+////                .header("Accept", "application/vnd.github.v3+json")
+//                .build()
+//            it.proceed(newRequest)
+//        })
+
+        if (BuildConfig.DEBUG) {
+            val loggingInterceptor = HttpLoggingInterceptor()
+            loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+            builder.addInterceptor(loggingInterceptor)
+        }
+
+        return ApolloClient.Builder()
+            .serverUrl(BuildConfig.GRAPHQL_BASE_URL)
+            .okHttpClient(okHttpClient = builder.build())
+            .build()
+    }
+
 
     @Provides
     @Singleton

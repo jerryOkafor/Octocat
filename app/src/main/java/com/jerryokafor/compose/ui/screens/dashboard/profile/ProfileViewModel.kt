@@ -45,7 +45,8 @@ class ProfileViewModel @Inject constructor(private val getUser: GetUserUseCase) 
             when (action) {
                 is ProfileUIState.State.GetUser -> previousSate.copy(
                     loading = action.loading,
-                    info = action.info
+                    info = action.info,
+                    user = action.user ?: previousSate.user
                 )
                 else -> previousSate
             }
@@ -89,8 +90,7 @@ class ProfileViewModel @Inject constructor(private val getUser: GetUserUseCase) 
 
     }
 
-
     sealed class Action : UIAction {
-        object GetUserProfile : Action()
+        data class GetUserProfile(val force: Boolean = false) : Action()
     }
 }

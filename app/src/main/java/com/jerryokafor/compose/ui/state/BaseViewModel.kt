@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.asStateFlow
 /**
  * Reducer kind of ViewModel that implements Unidirectional Data Flow (UDF) and single
  * point of action invocation while exposing an immutable data flow for composable views
- * in the form of [StateFlow]
+ * in the form of [kotlinx.coroutines.flow.StateFlow]
  * */
 abstract class BaseViewModel<State : UIState, Action : UIAction>(
     initialState: () -> State,
@@ -23,7 +23,7 @@ abstract class BaseViewModel<State : UIState, Action : UIAction>(
 
     /**
      * Private Mutable state holder, helps to hold the state of the
-     * view while exposing an Immutable state as [StateFlow]
+     * view while exposing an Immutable state as [kotlinx.coroutines.flow.StateFlow]
      * */
     protected val _state = MutableStateFlow(initialState())
 

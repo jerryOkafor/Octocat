@@ -1,6 +1,7 @@
 package com.jerryokafor.compose.ui.compose
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -32,8 +33,7 @@ fun ProfileContactItem(
     onClick: () -> Unit = {}
 ) {
     Surface(
-        modifier = Modifier.height(32.dp),
-        onClick = onClick,
+        modifier = Modifier.height(32.dp).clickable { onClick() },
         shape = RoundedCornerShape(CornerSize(15))
     ) {
         Row(

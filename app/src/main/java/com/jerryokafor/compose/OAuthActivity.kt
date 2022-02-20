@@ -35,7 +35,7 @@ class OAuthActivity : ComponentActivity() {
             .appendQueryParameter("redirect_url", "repo-auth://callback")
             .appendQueryParameter("response_type", "code")
             .appendQueryParameter("state", oAuthState)
-            .appendQueryParameter("scope", "user,repo,notifications")
+            .appendQueryParameter("scope", "user,repo,public_repo,read:org, read:status,notifications")
             .build()
 
         val builder = CustomTabsIntent.Builder()

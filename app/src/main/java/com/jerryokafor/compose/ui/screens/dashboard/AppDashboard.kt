@@ -9,10 +9,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -60,6 +57,11 @@ fun AppDashboard(
     viewModel: HomeViewModel = hiltViewModel(),
     profileViewModel: ProfileViewModel = hiltViewModel()
 ) {
+
+    LaunchedEffect(profileViewModel) {
+        profileViewModel.onAction(ProfileViewModel.Action.GetUserProfile())
+    }
+
     val navController = rememberAnimatedNavController()
     val (appBarConfig, setAppBarConfig) = remember { mutableStateOf(AppBarConfiguration()) }
     val onAppConfigurationChange: (AppBarConfiguration) -> Unit = {
@@ -193,20 +195,26 @@ fun TopBar(
         NavigationItem.Home.route -> 0.dp
         else -> 2.dp
     }
+    Timber.d("Current Route: $currentRoute")
     TopAppBar(
         elevation = elevation,
         title = {
-            Crossfade(targetState = currentRoute) {
+            Crossfade(targetState = currentRoute, animationSpec = tween(100)) {
                 when (it) {
                     NavigationItem.Profile.route -> Column {
-                        Text(text = appBarConfiguration.title, fontSize = 14.sp)
-                        Text(text = appBarConfiguration.subTitle, fontSize = 20.sp)
+                        Text(
+                            text = appBarConfiguration.title,
+                            style = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Normal)
+                        )
+                        Text(
+                            text = appBarConfiguration.subTitle,
+                            style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.SemiBold)
+                        )
                     }
                     else -> {
                         Text(
                             text = appBarConfiguration.title,
-                            fontSize = 20.sp,
-                            style = TextStyle(fontWeight = FontWeight.Bold)
+                            style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.SemiBold)
                         )
                     }
                 }

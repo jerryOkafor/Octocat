@@ -2,6 +2,7 @@ package com.jerryokafor.compose.data.api.request
 
 import com.google.gson.annotations.SerializedName
 import com.jerryokafor.compose.domain.model.Plan
+import com.jerryokafor.compose.domain.model.Status
 import com.jerryokafor.compose.domain.model.User
 
 /**
@@ -75,37 +76,21 @@ data class UserResponse(
 
 fun UserResponse.toUser(): User = User(
     login = login,
-    id = id,
+    id = id.toString(),
     avatarUrl = avatarUrl,
-    url = url,
-    followersUrl = followersUrl,
-    followingUrl = followingUrl,
-    gitUrl = gitUrl,
-    starredUrl = starredUrl,
-    subscriptionUrl = subscriptionUrl,
-    organisationUrl = organisationUrl,
-    reposUrl = reposUrl,
-    eventsUrl = eventsUrl,
-    type = type,
-    siteAdmin = siteAdmin,
     name = name,
+    status = Status("", ""),
     company = company,
     blog = blog,
     location = location,
     email = email,
-    hireable = hireable,
     bio = bio,
     twitterUsername = twitterUsername,
     publicRepos = publicRepos,
-    publicGits = publicGits,
     followers = followers,
     following = following,
-    privateGists = privateGists,
     totalPrivateRepos = totalPrivateRepos,
     ownedPrivateRepos = ownedPrivateRepos,
-    diskUsage = diskUsage,
-    collaborators = collaborators,
-    plan = plan.toPlan(),
     createdAt = createdAt,
     updatedAt = updatedAt
 )
