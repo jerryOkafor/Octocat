@@ -23,6 +23,7 @@ import com.jerryokafor.compose.AuthState
 import com.jerryokafor.compose.ui.screens.splash.Splash
 import com.jerryokafor.compose.ui.screens.dashboard.AppDashboard
 import com.jerryokafor.compose.ui.screens.auth.login.Login
+import com.jerryokafor.compose.ui.screens.settings.Settings
 import com.jerryokafor.compose.ui.theme.AppTheme
 import timber.log.Timber
 
@@ -39,7 +40,6 @@ fun ComposeApp(
 ) {
     val authState by viewModel.authState.collectAsState(initial = AuthState.NO_AUTH)
 
-    val navController = rememberAnimatedNavController()
     val systemUiController = rememberSystemUiController()
     val useDarkIcons = !isSystemInDarkTheme()
     val transitionState = remember { MutableTransitionState(SplashState.Shown) }
@@ -93,8 +93,25 @@ fun ComposeApp(
                 Crossfade(targetState = authState) {
                     Timber.d("Auth: $it")
                     when (it) {
-                        AuthState.AUTH -> AppDashboard()
+                        AuthState.AUTH -> {
+                            val navController = rememberAnimatedNavController()
+                            AnimatedNavHost(
+                                navController = navController,
+                                startDestination = "dashboard",
+                                enterTransition = { enterTransition },
+                                exitTransition = { exitTransition },
+                            ) {
+                                composable("dashboard") {
+                                    AppDashboard(rootNavController = navController)
+                                }
+
+                                composable("settings") {
+                                    Settings(rootNavController = navController)
+                                }
+                            }
+                        }
                         AuthState.NO_AUTH -> {
+                            val navController = rememberAnimatedNavController()
                             Scaffold {
                                 AnimatedNavHost(
                                     navController = navController,

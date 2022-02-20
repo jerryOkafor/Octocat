@@ -38,7 +38,7 @@ private fun UserDataQuery.Viewer.toUser(): User = User(
     id = id,
     avatarUrl = avatarUrl.toString(),
     name = name.toString(),
-    status = Status(emoji = status?.emoji, message = status?.message),
+    status = Status(emojiHTML = status?.emojiHTML.toString(), message = status?.message),
     company = company,
     blog = websiteUrl.toString(),
     location = location.toString(),
@@ -50,6 +50,9 @@ private fun UserDataQuery.Viewer.toUser(): User = User(
     following = following.totalCount,
     totalPrivateRepos = privateRepos.totalCount,
     ownedPrivateRepos = privateRepos.totalCount,
+    repositories = repositories.totalCount,
+    starredRepositories = starredRepositories.totalCount,
+    organizations = organizations.totalCount,
     createdAt = createdAt.toString(),
     updatedAt = updatedAt.toString()
 )

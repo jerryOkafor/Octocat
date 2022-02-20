@@ -13,7 +13,7 @@ query UserData($name:String!){
         twitterUsername
         status {
             id
-            emoji
+            emojiHTML
             message
         }
         followers {
@@ -32,6 +32,15 @@ query UserData($name:String!){
             privacy: PRIVATE
             orderBy: {field: UPDATED_AT, direction: DESC}
         ) {
+            totalCount
+        }
+        starredRepositories{
+            totalCount
+        }
+        organizations{
+            totalCount
+        }
+        repositories{
             totalCount
         }
         pinnedItems(first: 5, types: [REPOSITORY, GIST]) {

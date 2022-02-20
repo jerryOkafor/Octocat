@@ -16,13 +16,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -41,6 +39,7 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import com.jerryokafor.compose.R
 import com.jerryokafor.compose.ui.compose.GithubLinkItem
+import com.jerryokafor.compose.ui.compose.HtmlText
 import com.jerryokafor.compose.ui.compose.ProfileContactItem
 import com.jerryokafor.compose.ui.screens.dashboard.AppBarConfiguration
 import com.jerryokafor.compose.ui.theme.*
@@ -155,10 +154,19 @@ fun ProfileContent(
                                     .fillMaxWidth()
                                     .padding(horizontal = DP8)
                             ) {
-                                Text(
-                                    text = with(it.status) { "$emoji $message" },
-                                    style = MaterialTheme.typography.body1
-                                )
+                                Row(horizontalArrangement = Arrangement.spacedBy(DP16)) {
+                                    HtmlText(
+                                        text = it.status.emojiHTML.toString(),
+                                        maxLines = 1,
+                                        style = MaterialTheme.typography.body1
+                                    )
+
+                                    Text(
+                                        text = it.status.message.toString(),
+                                        style = MaterialTheme.typography.body1
+                                    )
+                                }
+
                             }
 
                             Text(
@@ -366,19 +374,19 @@ fun ProfileContent(
                             GithubLinkItem(
                                 icon = R.drawable.ic_repository,
                                 text = stringResource(R.string.title_repositories),
-                                subText = "175",
+                                subText = (state.user?.repositories ?: 0).toString(),
                                 iconBackground = githubRepoColor
                             )
                             GithubLinkItem(
                                 icon = R.drawable.ic_organisation,
                                 text = stringResource(R.string.title_organisations),
-                                subText = "2",
+                                subText = (state.user?.organizations ?: 0).toString(),
                                 iconBackground = githubOrgColor
                             )
                             GithubLinkItem(
                                 icon = R.drawable.ic_star,
                                 text = stringResource(R.string.title_starred),
-                                subText = "180",
+                                subText = (state.user?.starredRepositories ?: 0).toString(),
                                 iconBackground = githubStarColor
                             )
                         }

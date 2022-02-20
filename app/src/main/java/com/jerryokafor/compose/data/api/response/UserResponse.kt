@@ -91,6 +91,9 @@ fun UserResponse.toUser(): User = User(
     following = following,
     totalPrivateRepos = totalPrivateRepos,
     ownedPrivateRepos = ownedPrivateRepos,
+    repositories = 0,
+    organizations = 0,
+    starredRepositories = 0,
     createdAt = createdAt,
     updatedAt = updatedAt
 )

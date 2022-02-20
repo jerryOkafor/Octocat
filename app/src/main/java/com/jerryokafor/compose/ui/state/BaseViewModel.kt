@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.asStateFlow
  * */
 abstract class BaseViewModel<State : UIState, Action : UIAction>(
     initialState: () -> State,
-    reducer: UIStateReducer<State>?
+    reducer: UIStateReducer<State>? = null
 ) :
     ViewModel() {
 

@@ -55,7 +55,7 @@ fun HomeContent() {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(Spacing.DP16),
+        verticalArrangement = Arrangement.spacedBy(DP16),
     ) {
         item {
             Card(

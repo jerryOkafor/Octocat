@@ -50,7 +50,7 @@ fun GithubLinkItem(
         ) {
             Row(
                 modifier = modifier
-                    .fillMaxWidth(),
+                    .wrapContentWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(Spacing.DP16)
             ) {
@@ -69,7 +69,7 @@ fun GithubLinkItem(
                 }
                 Text(text = text, style = TextStyle(fontSize = 18.sp))
             }
-            Text(modifier = Modifier.padding(DP8), text = subText)
+            Text(modifier = Modifier.padding(DP8),text = subText)
         }
     }
 }

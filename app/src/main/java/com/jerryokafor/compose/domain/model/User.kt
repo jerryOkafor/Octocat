@@ -15,7 +15,7 @@ data class Plan(
     val collaborators: Int
 )
 
-data class Status(val emoji: String?, val message: String?)
+data class Status(val emojiHTML: String?, val message: String?)
 
 data class User(
     val login: String,
@@ -34,6 +34,9 @@ data class User(
     val following: Int,
     val totalPrivateRepos: Int,
     val ownedPrivateRepos: Int,
+    val repositories: Int = 0,
+    val organizations: Int = 0,
+    val starredRepositories: Int = 0,
     val createdAt: String,
     val updatedAt: String
 )

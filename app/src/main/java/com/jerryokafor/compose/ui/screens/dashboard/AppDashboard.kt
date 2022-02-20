@@ -54,12 +54,21 @@ sealed class NavigationItem(var route: String, var icon: Int, var title: String)
 @ExperimentalAnimationApi
 @Composable
 fun AppDashboard(
+    rootNavController: NavHostController,
     viewModel: HomeViewModel = hiltViewModel(),
     profileViewModel: ProfileViewModel = hiltViewModel()
 ) {
 
     LaunchedEffect(profileViewModel) {
         profileViewModel.onAction(ProfileViewModel.Action.GetUserProfile())
+    }
+
+    //Todo: This might be passed down to the individual Screen depending on the requirements at a time
+    val topAppBarAction = remember { mutableStateOf<TopAppBarAction?>(null) }
+
+    val onHandleTopAppBarAction: (TopAppBarAction) -> Unit = {
+        topAppBarAction.value = it
+        rootNavController.navigate("settings")
     }
 
     val navController = rememberAnimatedNavController()
@@ -78,7 +87,8 @@ fun AppDashboard(
         navController = navController,
         profileViewModel = profileViewModel,
         appBarConfiguration = appBarConfig,
-        onAppConfigurationChange = onAppConfigurationChange
+        onAppConfigurationChange = onAppConfigurationChange,
+        onHandleTopAppBarAction = onHandleTopAppBarAction
     )
 
 
@@ -96,17 +106,12 @@ fun AppDashboardContent(
     navController: NavHostController,
     profileViewModel: ProfileViewModel,
     appBarConfiguration: AppBarConfiguration,
-    onAppConfigurationChange: (AppBarConfiguration) -> Unit
+    onAppConfigurationChange: (AppBarConfiguration) -> Unit,
+    onHandleTopAppBarAction: (TopAppBarAction) -> Unit,
+
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route.toString()
-
-    //Todo: This might be passed down to the individual Screen depending on the requirements at a time
-    val topAppBarAction = remember { mutableStateOf<TopAppBarAction?>(null) }
-
-    val onHandleTopAppBarAction: (TopAppBarAction) -> Unit = {
-        topAppBarAction.value = it
-    }
 
     var previousOffset = 0
     val onScroll: (LazyListState) -> Unit = {
