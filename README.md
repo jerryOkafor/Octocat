@@ -29,3 +29,6 @@ https://medium.com/bugless/undo-redo-graphics-editor-with-command-pattern-in-kot
 
 Testing
 https://www.apollographql.com/docs/kotlin/testing/mocking-graphql-responses/
+
+// Forming GraphQL
+https://stepzen.com/docs/using-graphql/graphql-query-basics

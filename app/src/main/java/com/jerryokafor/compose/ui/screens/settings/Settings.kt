@@ -69,12 +69,10 @@ fun SettingsContent(rootNavController: NavHostController, viewModel: SettingsVie
                     )
                 },
                 navigationIcon = {
-                    Surface(
-                        modifier = Modifier.padding(DP8),
-                        onClick = { rootNavController.popBackStack() }) {
+                    IconButton(onClick = { rootNavController.popBackStack() }) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
-                            contentDescription = ""
+                            contentDescription = "Navigate Up"
                         )
                     }
                 }

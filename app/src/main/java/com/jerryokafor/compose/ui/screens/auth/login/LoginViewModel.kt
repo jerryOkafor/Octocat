@@ -51,7 +51,7 @@ class LoginViewModel @Inject constructor(private val login: LoginUseCase) :
         }) {
 
     //Optional
-    public override fun onAction(action: Action) {
+    override fun onAction(action: Action) {
         when (action) {
             is Action.ExchangeCodeForAccessToken -> {
                 if (action.oAuthResponse == null || action.oAuthState != action.oAuthResponse.state) {
