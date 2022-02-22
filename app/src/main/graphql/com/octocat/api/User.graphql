@@ -1,7 +1,7 @@
 query User {
     viewer {
         id
-        username: login
+        login
         name
     }
 }

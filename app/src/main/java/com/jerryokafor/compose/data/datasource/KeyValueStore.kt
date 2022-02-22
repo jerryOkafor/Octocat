@@ -55,13 +55,21 @@ class KeyValueStore(
     private val context: Context,
     private val externalScope: CoroutineScope,
     private val defaultDispatcher: CoroutineDispatcher
-) :
-    AppDataSource {
+) : AppDataSource {
 
     private val Context.dataStore by dataStore(
         fileName = "user_pref_file.json",
         serializer = UserPreferencesSerializer
     )
+
+    override suspend fun saveUserLogin(login: String) {
+        externalScope.launch(defaultDispatcher) {
+            context.dataStore.updateData { it.copy(login = login) }
+        }.join()
+    }
+
+    override fun getUserLogin(): Flow<String?> =
+        context.dataStore.data.map { it.login }.flowOn(defaultDispatcher)
 
     override val authState: SharedFlow<AuthState> =
         context.dataStore.data.map {
@@ -81,14 +89,12 @@ class KeyValueStore(
     }
 
     override suspend fun saveAccessToken(token: String) {
-        Timber.d("Saving Access token")
         externalScope.launch(defaultDispatcher) {
             context.dataStore.updateData { it.copy(accessToken = token) }
         }.join()
-
     }
 
-    override suspend fun getAccessToken(): Flow<String?> =
+    override fun getAccessToken(): Flow<String?> =
         context.dataStore.data.map { it.accessToken }.flowOn(defaultDispatcher)
 
 }

@@ -48,12 +48,14 @@ object AppModule {
     @Singleton
     fun provideGithubLoginUseCase(
         appDataSource: AppDataSource,
+        apolloClient: ApolloClient,
         authDataSource: AuhDataSource,
         @IoDispatcher defaultDispatcher: CoroutineDispatcher
     ): LoginUseCase =
         GithubLoginUseCase(
             appDataSource = appDataSource,
             authDataSource = authDataSource,
+            apolloClient = apolloClient,
             defaultDispatcher = defaultDispatcher
         )
 
@@ -73,6 +75,9 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideGetUserUseCase(apolloClient: ApolloClient): GetUserUseCase =
-        GithubGetUserUseCase(apolloClient = apolloClient)
+    fun provideGetUserUseCase(
+        appDataSource: AppDataSource,
+        apolloClient: ApolloClient
+    ): GetUserUseCase =
+        GithubGetUserUseCase(appDataSource = appDataSource, apolloClient = apolloClient)
 }

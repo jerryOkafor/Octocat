@@ -12,5 +12,8 @@ interface AppDataSource {
     val authState: SharedFlow<AuthState>
     suspend fun logout()
     suspend fun saveAccessToken(token: String)
-    suspend fun getAccessToken(): Flow<String?>
+    fun getAccessToken(): Flow<String?>
+
+    suspend fun saveUserLogin(login: String)
+    fun getUserLogin(): Flow<String?>
 }

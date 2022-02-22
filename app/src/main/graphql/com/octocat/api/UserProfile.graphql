@@ -1,4 +1,4 @@
-query UserData($login:String!){
+query UserProfile($login:String!){
     user(login:$login) {
         id
         login
