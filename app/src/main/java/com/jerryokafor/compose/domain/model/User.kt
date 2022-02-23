@@ -1,6 +1,5 @@
 package com.jerryokafor.compose.domain.model
 
-import com.jerryokafor.compose.data.api.request.PlanResponse
 
 /**
  * @Author <Author>
@@ -16,6 +15,15 @@ data class Plan(
 )
 
 data class Status(val emojiHTML: String?, val message: String?)
+data class Owner(val login: String, val avatarUrl: String)
+data class PinnedItem(
+    val id: String,
+    val name: String,
+    val description: String,
+    val owner: Owner,
+    val stargazers: Int,
+    val primaryLanguage: String?
+)
 
 data class User(
     val login: String,
@@ -37,6 +45,7 @@ data class User(
     val repositories: Int = 0,
     val organizations: Int = 0,
     val starredRepositories: Int = 0,
+    val pinnedItems: List<PinnedItem> = emptyList(),
     val createdAt: String,
     val updatedAt: String
 )

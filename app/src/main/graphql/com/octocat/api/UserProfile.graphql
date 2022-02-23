@@ -48,6 +48,7 @@ query UserProfile($login:String!){
             edges {
                 node {
                     ... on Repository {
+                        id
                         name
                         description
                         owner{
