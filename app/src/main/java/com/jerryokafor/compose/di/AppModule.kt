@@ -2,7 +2,7 @@ package com.jerryokafor.compose.di
 
 import android.content.Context
 import com.apollographql.apollo3.ApolloClient
-import com.jerryokafor.compose.data.api.service.UserService
+import com.jerryokafor.compose.data.api.service.MarkdownService
 import com.jerryokafor.compose.data.datasource.KeyValueStore
 import com.jerryokafor.compose.data.usecase.GithubAuthStateUseCase
 import com.jerryokafor.compose.data.usecase.GithubGetUserUseCase
@@ -77,7 +77,12 @@ object AppModule {
     @Singleton
     fun provideGetUserUseCase(
         appDataSource: AppDataSource,
+        markdownService: MarkdownService,
         apolloClient: ApolloClient
     ): GetUserUseCase =
-        GithubGetUserUseCase(appDataSource = appDataSource, apolloClient = apolloClient)
+        GithubGetUserUseCase(
+            appDataSource = appDataSource,
+            markdownService = markdownService,
+            apolloClient = apolloClient
+        )
 }

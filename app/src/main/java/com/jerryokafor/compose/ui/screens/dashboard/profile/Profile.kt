@@ -319,18 +319,14 @@ fun ProfileContent(
                     Column(modifier = Modifier.padding(bottom = DP32)) {
                         Text(
                             modifier = Modifier.padding(DP16),
-                            text = "${state.user?.login}/README.md"
+                            text = "${state.user?.login}/README.md",
+                            style = MaterialTheme.typography.body2.copy(fontWeight = FontWeight.Light)
                         )
                         Divider()
-                        Text(
+                        HtmlText(
                             modifier = Modifier.padding(DP16),
-                            text = """
-                🔭 Passionate software engineer with a knack for delivering high quality, maintainable and scalable software product in time. Currently I work for @velatech and consulting for @mintfintech - building awesome products together with my team. I read, follow and write on all things tech especially mobile application development and Machine Learning.
-
-                🌱 Currently learning Artificial Intelligence and Machine Learning, presently, I have completed a Deep Learning Nanodegree on Udacity - first step to quenching my thirst for a career in Machine Learning.
-
-                👯 Open to collaboration on projects that explores the applications of Machine Learning to mobile devices
-            """.trimIndent()
+                            text = state.user?.specialRepo?.readme.toString(),
+                            style = MaterialTheme.typography.caption.copy(fontWeight = FontWeight.Light)
                         )
                     }
                 }
@@ -372,7 +368,7 @@ fun ProfileContent(
                                 items(it) { item ->
                                     PinnedCard(
                                         modifier = Modifier
-                                            .width(300.dp),
+                                            .width(300.dp).height(160.dp),
                                         pinnedItem = item
                                     )
                                 }
@@ -469,10 +465,11 @@ private fun Avatar(modifier: Modifier = Modifier, uri: String?) {
 }
 
 @Composable
-fun PinnedCard(modifier: Modifier = Modifier, pinnedItem: PinnedItem) {
+fun PinnedCard(modifier: Modifier = Modifier, pinnedItem: PinnedItem, onClick: () -> Unit = {}) {
     Surface(
         border = BorderStroke(width = 1.dp, color = md_theme_dark_onSurfaceVariant),
-        shape = RoundedCornerShape(5)
+        shape = RoundedCornerShape(5),
+        onClick = onClick
     ) {
 
         Column(modifier = modifier.padding(DP16)) {

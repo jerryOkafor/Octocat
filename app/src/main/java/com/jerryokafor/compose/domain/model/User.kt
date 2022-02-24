@@ -25,6 +25,8 @@ data class PinnedItem(
     val primaryLanguage: String?
 )
 
+data class SpecialRepo(val readme: String, val name: String, val nameWithOwner: String)
+
 data class User(
     val login: String,
     val id: String,
@@ -46,6 +48,7 @@ data class User(
     val organizations: Int = 0,
     val starredRepositories: Int = 0,
     val pinnedItems: List<PinnedItem> = emptyList(),
+    val specialRepo: SpecialRepo,
     val createdAt: String,
     val updatedAt: String
 )

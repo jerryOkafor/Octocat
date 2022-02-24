@@ -8,9 +8,8 @@ import com.google.gson.GsonBuilder
 import com.jerryokafor.compose.BuildConfig
 import com.jerryokafor.compose.data.api.AuthorizationInterceptor
 import com.jerryokafor.compose.data.api.service.AuthService
-import com.jerryokafor.compose.data.api.service.UserService
+import com.jerryokafor.compose.data.api.service.MarkdownService
 import com.jerryokafor.compose.data.datasource.GithubAuthDataSource
-import com.jerryokafor.compose.data.datasource.KeyValueStore
 import com.jerryokafor.compose.di.dispatchers.ClientId
 import com.jerryokafor.compose.di.dispatchers.ClientSecret
 import com.jerryokafor.compose.domain.datasource.AppDataSource
@@ -91,17 +90,12 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideApolloClient(keyValueStore: AppDataSource,@ApiOkHttClient okHttpClient: OkHttpClient): ApolloClient {
+    fun provideApolloClient(
+        keyValueStore: AppDataSource,
+        @ApiOkHttClient okHttpClient: OkHttpClient
+    ): ApolloClient {
         val builder = OkHttpClient.Builder()
             .addInterceptor(AuthorizationInterceptor(keyValueStore))
-//        builder.addInterceptor(Interceptor {
-//            val originalRequest = it.request()
-//            val newRequest = originalRequest.newBuilder()
-////                .header("Accept", "application/vnd.github.v3+json")
-//                .build()
-//            it.proceed(newRequest)
-//        })
-
         if (BuildConfig.DEBUG) {
             val loggingInterceptor = HttpLoggingInterceptor()
             loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -150,8 +144,8 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideUserApiService(@ApiRetrofit retrofit: Retrofit): UserService =
-        retrofit.create(UserService::class.java)
+    fun provideMarkdownApiService(@ApiRetrofit retrofit: Retrofit): MarkdownService =
+        retrofit.create(MarkdownService::class.java)
 
     @Provides
     @Singleton

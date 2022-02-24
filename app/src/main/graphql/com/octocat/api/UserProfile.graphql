@@ -73,9 +73,8 @@ query UserProfile($login:String!){
         starredRepositories {
             totalCount
         }
-        repository(name: $login) {
+        specialRepository:repository(name: $login) {
             object(expression: "master:README.md") {
-                commitResourcePath
                 ... on Blob {
                     text
                     repository {

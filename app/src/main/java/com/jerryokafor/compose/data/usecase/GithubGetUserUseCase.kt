@@ -1,6 +1,8 @@
 package com.jerryokafor.compose.data.usecase
 
 import com.apollographql.apollo3.ApolloClient
+import com.jerryokafor.compose.data.api.request.MarkdownRequest
+import com.jerryokafor.compose.data.api.service.MarkdownService
 import com.jerryokafor.compose.data.mapping.toUser
 import com.jerryokafor.compose.domain.datasource.AppDataSource
 import com.jerryokafor.compose.domain.model.Resource
@@ -17,6 +19,7 @@ import timber.log.Timber
  */
 class GithubGetUserUseCase(
     private val appDataSource: AppDataSource,
+    private val markdownService: MarkdownService,
     private val apolloClient: ApolloClient
 ) : GetUserUseCase {
     override suspend fun invoke() = flow {
@@ -29,8 +32,20 @@ class GithubGetUserUseCase(
 
             val response = apolloClient.query(UserProfileQuery(userLogin)).execute()
             val user = response.data?.user?.toUser()!!
-            Timber.d("User: $user")
-            emit(Resource.Success(user))
+
+            val html = markdownService.markdown(
+                markdownRequest = MarkdownRequest(
+                    text = user.specialRepo.readme,
+                    context = "$userLogin/$userLogin"
+                )
+            )
+
+           val newUser =  user.copy(specialRepo = user.specialRepo.copy(readme = html.body()?.string().toString()))
+
+            Timber.d("User: ${user.specialRepo}")
+            Timber.d("HTMl: ${html.body()?.string().toString()}")
+
+            emit(Resource.Success(newUser))
         } catch (e: Throwable) {
             Timber.w(e)
             val error = e.handle()
